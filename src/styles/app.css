@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: Mondwest, ui-serif, serif;
+  --font-body: Departure Mono, ui-monospace, monospace;
+  --text-base: 14px;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-gray-800;
+  }
+
+  html,
+  body {
+    @apply text-gray-400 bg-black font-body text-base;
+    font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: subpixel-antialiased;
+  }
+
+  body {
+    max-width: 1200px;
+    @apply mx-auto border-l border-r;
+  }
+
+  h1, h2, h3, h4, h5, h6 { 
+    @apply font-heading text-6xl text-white; 
+  }
+
+  .using-mouse * {
+    outline: none !important;
+  }
+
+  .pixel-art {
+    image-rendering: pixelated; /* Future-proof */
+    image-rendering: -moz-crisp-edges; /* Firefox */
+    image-rendering: -o-crisp-edges;  /* Opera */
+    image-rendering: crisp-edges;
+  }
+
+  .ligatures {
+    font-variant-ligatures: discretionary-ligatures;
+  }
+
+  .section {
+    @apply px-12 lg:px-[120px]
+  }
+}
+
+@font-face {
+  font-family: 'Mondwest';
+  src: url('/fonts/Mondwest-Regular.woff2') format('woff2'),
+       url('/fonts/Mondwest-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('/fonts/DepartureMono-Regular.woff2') format('woff2'),
+       url('/fonts/DepartureMono-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
