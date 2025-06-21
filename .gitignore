@@ -20,3 +20,4 @@ yarn.lock
 /playwright/.cache/
 .tanstack
 /public/fonts/Mondwest*
+/public/videos

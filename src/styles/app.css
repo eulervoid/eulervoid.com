@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-heading: Mondwest, ui-serif, serif;
@@ -17,7 +18,7 @@
 
   html,
   body {
-    @apply text-gray-400 bg-black font-body text-base;
+    @apply text-gray-400 bg-black font-body text-base min-h-screen;
     font-smoothing: subpixel-antialiased;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: subpixel-antialiased;
@@ -29,7 +30,50 @@
   }
 
   h1, h2, h3, h4, h5, h6 { 
-    @apply font-heading text-6xl text-white; 
+    @apply font-heading text-white; 
+  }
+
+  h1 { @apply text-6xl; }
+
+  h2 { @apply text-6xl; }
+
+  h3 { @apply text-4xl; }
+
+  h4, h5, h6 { @apply text-2xl; }
+
+  ul,
+  ol {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.625em;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding-left: 0.375em;
+  }
+
+  li > ul,
+  li > ol {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+  }
+
+  li:first-child {
+    margin-top: 0;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
   }
 
   .using-mouse * {

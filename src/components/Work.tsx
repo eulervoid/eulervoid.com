@@ -1,7 +1,6 @@
 import { Desktop } from "./Desktop";
-import { useScroll, useMotionValueEvent } from "motion/react";
+import { useScroll } from "motion/react";
 import { useRef } from "react";
-import { ClickAnimator } from "./ClickAnimator";
 
 const randomSize = () => ({
 	width: 700 + (Math.random() - 0.5) * 100,
@@ -41,23 +40,25 @@ export function Work() {
 
 	const { scrollYProgress } = useScroll({
 		target: containerRef,
-		offset: ["start start", "end end"],
-	});
-
-	useMotionValueEvent(scrollYProgress, "change", (value) => {
-		console.log(value);
+		offset: [-0.1, 1.5],
+		axis: "y",
 	});
 
 	return (
 		<div
 			id="work"
-			className="section py-20 border-t space-y-12 h-[300vh]"
+			className="relative border-t space-y-12 min-h-screen"
 			ref={containerRef}
 		>
-			<div className="sticky top-0 h-screen flex flex-col justify-center space-y-12">
+			<div className="section pt-20 pb-6 grid grid-cols-4 gap-x-12 gap-y-3 border-b z-200 bg-black sticky">
 				<h2>Work</h2>
-				<Desktop windows={windows} progress={scrollYProgress} />
+				<p className="col-span-2 col-start-3">
+					Since finishing my degree in Media Computer Science in 2015, I worked
+					with starups and big cooperations alike, combining design thinking and
+					creative problem solving with broad technical expertise.
+				</p>
 			</div>
+			<Desktop windows={windows} progress={scrollYProgress} />
 		</div>
 	);
 }

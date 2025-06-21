@@ -26,7 +26,7 @@ export const Route = createRootRoute({
 			},
 			...seo({
 				title: "Euler Void - A fictional emptiness.",
-				description: `Hello, I'm Josh, a software developer and creative technologist based in Berlin.`,
+				description: `Hello, I'm Josh, a Software Engineer and creative technologist based in Berlin.`,
 			}),
 		],
 		links: [
@@ -52,10 +52,10 @@ export const Route = createRootRoute({
 			{ rel: "icon", href: "/favicon.ico" },
 		],
 		scripts: [
-			{
-				src: "/customScript.js",
-				type: "text/javascript",
-			},
+			// {
+			// 	src: "/customScript.js",
+			// 	type: "text/javascript",
+			// },
 		],
 	}),
 	errorComponent: (props) => {
@@ -71,9 +71,11 @@ export const Route = createRootRoute({
 
 function RootComponent() {
 	return (
-		<RootDocument>
-			<Outlet />
-		</RootDocument>
+		<React.StrictMode>
+			<RootDocument>
+				<Outlet />
+			</RootDocument>
+		</React.StrictMode>
 	);
 }
 

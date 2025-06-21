@@ -12,8 +12,8 @@ type ClickAnimatorProps = Click & {
 };
 
 const FRAME_WIDTH = 32;
-const FRAME_COUNT = 5;
-const ANIMATION_DURATION = 0.4; // seconds
+const FRAME_COUNT = 6;
+const ANIMATION_DURATION = 0.3; // seconds
 
 export function ClickAnimator({
 	id,
@@ -41,8 +41,6 @@ export function ClickAnimator({
 		};
 		runAnimation();
 	}, []);
-
-	useEffect(() => console.log(id), [id]);
 
 	return (
 		<div

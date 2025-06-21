@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAnimate, motion } from "framer-motion";
+import { useAnimate, motion } from "motion/react";
 
-type TypeText = {
-	type: "TypeText";
+type WriteText = {
+	type: "WriteText";
 	text: string;
 	tick?: number;
 };
@@ -18,23 +18,62 @@ type Pause = {
 	seconds: number;
 };
 
-export type Script = (TypeText | DeleteText | Pause)[];
+export type Script = (WriteText | DeleteText | Pause)[];
 
 export type TypewriterProps = {
 	script: Script;
 	className?: string;
 	repeat?: boolean;
 	initialText?: string;
+	defaultWriteTick?: number;
+	defaultDeleteTick?: number;
 };
 
-const DEFAULT_TYPE_SPEED = 0.05;
-const DEFAULT_DELETE_SPEED = 0.03;
+type ScriptStepOpts = {
+	tick?: number;
+	pauseAfter?: number;
+};
+
+type ScriptChainOpts = {
+	pauseAfterWrite?: number;
+	pauseAfterDelete?: number;
+};
+
+export function writeText(text: string, opts: ScriptStepOpts = {}): Script {
+	const { tick, pauseAfter } = opts;
+	return [{ type: "WriteText", text, tick }, ...pause(pauseAfter || 0)];
+}
+
+export function deleteText(chars?: number, opts: ScriptStepOpts = {}): Script {
+	const { tick, pauseAfter } = opts;
+	chars = chars && chars > 0 ? chars : 1000;
+	return [{ type: "DeleteText", chars, tick }, ...pause(pauseAfter || 0)];
+}
+
+export function pause(seconds: number): Script {
+	return seconds > 0 ? [{ type: "Pause", seconds }] : [];
+}
+
+export function chain(scripts: Script[], opts: ScriptChainOpts) {
+	const { pauseAfterWrite, pauseAfterDelete } = opts;
+	return scripts.reduce((acc, current) => {
+		const lastStep = acc.at(-1);
+		let defaultPause: Script = [];
+		if (lastStep && lastStep.type === "WriteText")
+			defaultPause = pause(pauseAfterWrite || -1);
+		if (lastStep && lastStep.type === "DeleteText")
+			defaultPause = pause(pauseAfterDelete || -1);
+		return [...acc, ...defaultPause, ...current];
+	}, []);
+}
 
 export function Typewriter({
 	script,
 	className,
 	repeat = false,
 	initialText = "",
+	defaultWriteTick = 0.1,
+	defaultDeleteTick = 0.05,
 }: TypewriterProps) {
 	const [text, setText] = useState(initialText);
 	const [, animate] = useAnimate();
@@ -49,8 +88,8 @@ export function Typewriter({
 					if (isCancelled) return;
 
 					switch (action.type) {
-						case "TypeText": {
-							const { text, tick = DEFAULT_TYPE_SPEED } = action;
+						case "WriteText": {
+							const { text, tick = defaultWriteTick } = action;
 							const baseText = currentText;
 							await animate(0, text.length, {
 								duration: text.length * tick,
@@ -65,7 +104,7 @@ export function Typewriter({
 						}
 
 						case "DeleteText": {
-							const { chars, tick = DEFAULT_DELETE_SPEED } = action;
+							const { chars, tick = defaultDeleteTick } = action;
 							const baseText = currentText;
 							const charsToDelete = Math.min(baseText.length, chars);
 							if (charsToDelete === 0) break;

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
 	return (
-		<div>
+		<div className="relative">
 			<Hero />
 			<Work />
 			<About />

@@ -1,17 +1,17 @@
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useMemo, useState, useRef } from "react";
 import {
 	motion,
 	useTransform,
 	MotionValue,
 	useMotionValueEvent,
-	easeInOut,
 	useSpring,
 	easeOut,
 } from "motion/react";
-import { closeButtonPosition, Window, WindowState } from "~/components/Window";
-import { createPausableRange, Point, randomPoint } from "~/util";
+import { closeButtonPosition, Window } from "~/components/Window";
+import { createPausableRange } from "~/util";
 import { Click, ClickAnimator } from "./ClickAnimator";
 import { nanoid } from "nanoid";
+import { useLayoutEffect } from "@tanstack/react-router";
 
 type WindowData = {
 	title: string;
@@ -22,82 +22,23 @@ type WindowData = {
 	};
 };
 
+type WindowState = WindowData & {
+	size: {
+		width: number;
+		height: number;
+	};
+	position?: {
+		top: number;
+		left: number;
+	};
+	closed?: boolean;
+	zIndex?: number;
+};
+
 type DesktopProps = {
 	windows: WindowData[];
 	progress: MotionValue<number>;
 };
-
-const distance = (p1: Point, p2: Point): number => {
-	const dx = p1.x - p2.x;
-	const dy = p1.y - p2.y;
-	return Math.sqrt(dx * dx + dy * dy);
-};
-
-const findMaxDistancePoint = (
-	rectX: number,
-	rectY: number,
-	existingPoints: Point[],
-	numSamples: number,
-	rng: () => number = Math.random,
-): Point => {
-	let bestPoint = randomPoint(0, 0, rectX, rectY, rng);
-	let maxSummedDistanceFound = 0;
-
-	if (!existingPoints || existingPoints.length === 0) {
-		return bestPoint;
-	}
-
-	for (let i = 0; i < numSamples; i++) {
-		const currentPoint = randomPoint(0, 0, rectX, rectY, rng);
-		const summedDistance = existingPoints.reduce(
-			(dist, point) => dist + distance(currentPoint, point),
-			0,
-		);
-		if (summedDistance > maxSummedDistanceFound) {
-			maxSummedDistanceFound = summedDistance;
-			bestPoint = currentPoint;
-		}
-	}
-
-	return bestPoint;
-};
-
-function samplePositions(
-	rects: { x: number; y: number }[],
-	numSamples: number,
-	rng: () => number = Math.random,
-): Point[] {
-	let points: Point[] = [];
-	for (const rect of rects) {
-		points = [
-			...points,
-			findMaxDistancePoint(rect.x, rect.y, points, numSamples, rng),
-		];
-	}
-	return points;
-}
-
-function getRects(
-	containerWidth: number,
-	containerHeight: number,
-	windows: WindowData[],
-): Point[] {
-	return windows.map((window) => {
-		const size = {
-			width: window.size?.width || DEFAULT_WINDOW_WIDTH,
-			height: window.size?.height || DEFAULT_WINDOW_HEIGHT,
-		};
-		const maxLeft = Math.max(0, containerWidth - size.width);
-		const maxTop = Math.max(0, containerHeight - size.height);
-		return { x: maxLeft, y: maxTop };
-	});
-}
-
-// @ts-ignore
-function relaxPoints(points: BoundedPoint[]): BoundedPoint[] {
-	// TODO: implement..
-	return points;
-}
 
 const DEFAULT_WINDOW_HEIGHT = 300;
 const DEFAULT_WINDOW_WIDTH = 500;
@@ -106,21 +47,17 @@ const ZINDEX_START = 100;
 export function Desktop({ windows: initialWindows, progress }: DesktopProps) {
 	const [windows, setWindows] = useState<WindowState[]>([]);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const windowRefs = useRef<HTMLDivElement[]>([]);
 	const [clicks, setClicks] = useState<Click[]>([]);
 
 	const smoothProgress = useSpring(progress, {
-		stiffness: 100,
-		damping: 30,
+		stiffness: 500,
+		damping: 50,
 		restDelta: 0.001,
 	});
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (containerRef.current && initialWindows.length > 0) {
-			const containerWidth = containerRef.current.offsetWidth;
-			const containerHeight = containerRef.current.offsetHeight;
-			const rects = getRects(containerWidth, containerHeight, initialWindows);
-			const positions = samplePositions(rects, 10);
-
 			const initialWindowsState = initialWindows.map((window, index) => {
 				const size = {
 					width: window.size?.width || DEFAULT_WINDOW_WIDTH,
@@ -129,10 +66,6 @@ export function Desktop({ windows: initialWindows, progress }: DesktopProps) {
 				return {
 					title: window.title,
 					imageUrl: window.imageUrl,
-					position: {
-						top: positions[index].y,
-						left: positions[index].x,
-					},
 					size,
 					closed: false,
 					zIndex: ZINDEX_START - index,
@@ -143,38 +76,58 @@ export function Desktop({ windows: initialWindows, progress }: DesktopProps) {
 		}
 	}, [initialWindows, containerRef.current]);
 
+	useLayoutEffect(() => {
+		if (windowRefs.current && containerRef.current) {
+			windowRefs.current.forEach((window, index) => {
+				const windowRect = window.getBoundingClientRect();
+				const containerRect = containerRef.current?.getBoundingClientRect();
+				if (!containerRect) return;
+				const windowTop = windowRect.top - containerRect.top;
+				const windowLeft = windowRect.left - containerRect.left;
+				setWindows((prev) => {
+					const newWindows = [...prev];
+					newWindows[index].position = {
+						top: windowTop,
+						left: windowLeft,
+					};
+					return newWindows;
+				});
+			});
+		}
+	}, [windowRefs.current, containerRef.current]);
+
 	// Create arrays of close button positions for all windows
 	const closeButtonPositions = useMemo(() => {
-		if (windows.length === 0)
-			return [
-				{ x: 0, y: 0 },
-				{
-					x: containerRef.current?.offsetWidth || 0,
-					y: containerRef.current?.offsetHeight || 0,
-				},
-			];
-		return windows.map((window) => closeButtonPosition(window));
+		return windows.map((window) => {
+			const position = window.position || { top: 0, left: 0 };
+			return closeButtonPosition(position);
+		});
 	}, [windows]);
 
 	const closeAnimationRange = useMemo(() => {
-		return createPausableRange(
-			[{ x: 0, y: 0 }, ...closeButtonPositions, { x: 0, y: 0 }],
-			{
-				totalPausePercentage: 0.1,
-				pauseWeights: { start: 0.1, intermediate: 1, end: 0.1 },
-			},
-		);
+		const range =
+			closeButtonPositions.length === 0
+				? []
+				: [
+						{ x: 0, y: 0 },
+						...closeButtonPositions,
+						closeButtonPositions.at(-1),
+					];
+		return createPausableRange(range, {
+			totalPausePercentage: 0.001,
+			pauseWeights: { start: 0.1, intermediate: 1, end: 0.1 },
+		});
 	}, [closeButtonPositions]);
 
 	const mouseX = useTransform(
-		smoothProgress,
+		progress,
 		closeAnimationRange.inputRange,
 		closeAnimationRange.outputRange.map((pos) => pos.x),
 		{ ease: easeOut },
 	);
 
 	const mouseY = useTransform(
-		smoothProgress,
+		progress,
 		closeAnimationRange.inputRange,
 		closeAnimationRange.outputRange.map((pos) => pos.y),
 		{ ease: easeOut },
@@ -184,16 +137,12 @@ export function Desktop({ windows: initialWindows, progress }: DesktopProps) {
 		setClicks((prev) => prev.filter((click) => click.id !== id));
 	};
 
-	// Update window states based on closeAnimationRange progress
 	useMotionValueEvent(smoothProgress, "change", (currentProgress) => {
 		setWindows((prev) =>
 			prev.map((window, index) => {
 				const numMidpoins = closeAnimationRange.pauseMidpoints.length;
 				const numWindows = windows.length;
-				if (numMidpoins !== numWindows)
-					throw new Error(
-						`The number of midpoints (${numMidpoins}) did not macht the number of windows ($numWindows}).`,
-					);
+				if (numMidpoins !== numWindows) return window;
 				const closePoint = closeAnimationRange.pauseMidpoints[index];
 				const shouldClose = currentProgress >= closePoint;
 				if (window.closed !== shouldClose) {
@@ -216,12 +165,17 @@ export function Desktop({ windows: initialWindows, progress }: DesktopProps) {
 		);
 	});
 
+	function windowClasses(index: number): string {
+		const margin = index === 0 ? "" : "-mt-64";
+		const alignment = index % 2 === 0 ? "self-end" : "self-start";
+		return `${margin} ${alignment}`;
+	}
+
 	return (
 		<div
 			ref={containerRef}
-			className="relative w-full h-[800px] overflow-hidden"
+			className="section relative w-full h-full flex flex-col"
 		>
-			{/* Animated mouse pointer */}
 			<motion.div
 				className="absolute z-50 pointer-events-none"
 				style={{
@@ -237,6 +191,24 @@ export function Desktop({ windows: initialWindows, progress }: DesktopProps) {
 				/>
 			</motion.div>
 
+			{windows.map((window, index) => {
+				return (
+					<Window
+						ref={(el) => {
+							if (el) windowRefs.current[index] = el;
+						}}
+						key={window.title}
+						zIndex={window.zIndex || 1}
+						title={window.title}
+						size={window.size}
+						imageUrl={window.imageUrl}
+						closed={window.closed || false}
+						onClick={() => {}}
+						className={windowClasses(index)}
+					/>
+				);
+			})}
+
 			{clicks.map((click) => (
 				<ClickAnimator
 					key={click.id}
@@ -246,21 +218,6 @@ export function Desktop({ windows: initialWindows, progress }: DesktopProps) {
 					onComplete={handleClickComplete}
 				/>
 			))}
-
-			{windows.map((window) => {
-				return (
-					<Window
-						key={window.title}
-						zIndex={window.zIndex}
-						title={window.title}
-						imageUrl={window.imageUrl}
-						position={window.position}
-						size={window.size}
-						closed={window.closed}
-						onClick={() => {}}
-					/>
-				);
-			})}
 		</div>
 	);
 }

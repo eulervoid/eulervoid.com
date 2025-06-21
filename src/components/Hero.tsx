@@ -1,31 +1,62 @@
-import { Typewriter, Script } from "./Typewriter";
+import { Suspense } from "react";
+import { DitheredMedia } from "./DitheredMedia";
+import {
+	Typewriter,
+	Script,
+	chain,
+	deleteText,
+	writeText,
+	pause,
+} from "./Typewriter";
+import { Canvas } from "@react-three/fiber";
+import { Pixelate } from "./Pixelate";
+import { Preload } from "@react-three/drei";
+import { SceneLoader } from "./SceneLoader";
 
 export function Hero() {
-	const script: Script = [
-		{ type: "Pause", seconds: 4 },
-		{ type: "DeleteText", chars: 100, tick: 0.05 },
-		{ type: "Pause", seconds: 0.5 },
-		{ type: "TypeText", text: "prototypes" },
-		{ type: "Pause", seconds: 4 },
-		{ type: "DeleteText", chars: 100, tick: 0.05 },
-		{ type: "Pause", seconds: 0.5 },
-		{ type: "TypeText", text: "websites" },
-		{ type: "Pause", seconds: 4 },
-		{ type: "DeleteText", chars: 100, tick: 0.07 },
-		{ type: "Pause", seconds: 0.5 },
-		{ type: "TypeText", text: "apps" },
-		{ type: "Pause", seconds: 4 },
-		{ type: "DeleteText", chars: 100, tick: 0.07 },
-		{ type: "Pause", seconds: 0.5 },
-		{ type: "TypeText", text: "brands" },
-		{ type: "Pause", seconds: 4 },
-		{ type: "DeleteText", chars: 100, tick: 0.1 },
-		{ type: "Pause", seconds: 0.5 },
-		{ type: "TypeText", text: "solutions" },
-	];
+	const script: Script = chain(
+		[
+			pause(4),
+			deleteText(),
+			writeText("prototypes"),
+			deleteText(),
+			writeText("websites"),
+			deleteText(),
+			writeText("apps"),
+			deleteText(),
+			writeText("brands"),
+			deleteText(),
+			writeText("ai systems"),
+			deleteText(7),
+			writeText("agents"),
+			deleteText(),
+			writeText("solutions"),
+		],
+		{
+			pauseAfterWrite: 4,
+			pauseAfterDelete: 0.5,
+		},
+	);
+
 	return (
-		<div className="section flex flex-col justify-center min-h-[80vh]">
-			<div className="space-y-2 max-w-100">
+		<div className="relative section flex flex-col justify-center h-[80vh] max-h-[680px]">
+			<div className="absolute inset-0 w-full h-full">
+				<Canvas orthographic>
+					<Suspense fallback={<SceneLoader />}>
+						<Pixelate pixelSize={2}>
+							<DitheredMedia
+								videoUrl="/videos/sand.mp4"
+								imageUrl="/images/smileys.jpg"
+								noiseUrl="/images/blue_noise/64_LDR_LLL1_8.png"
+								brightness={1.0}
+								contrast={0.5}
+							/>
+							<Preload all />
+						</Pixelate>
+					</Suspense>
+				</Canvas>
+			</div>
+			<div className="space-y-2 max-w-110 z-1 bg-black border px-8 py-6 ml-[-2rem]">
 				<h1>Hello!</h1>
 				<p>
 					I’m Josh, a software engineer and creative technologist based in

@@ -62,6 +62,12 @@ export const createBiasedRng = (
 	return () => biasedRandom(rng, biasStrength);
 };
 
+export const distance = (p1: Point, p2: Point): number => {
+	const dx = p1.x - p2.x;
+	const dy = p1.y - p2.y;
+	return Math.sqrt(dx * dx + dy * dy);
+};
+
 export const clamp = (value: number, min: number = 0, max: number = 1) => {
 	return Math.max(min, Math.min(max, value));
 };
@@ -139,7 +145,7 @@ export function createPausableRange(
 
 	const inputRange: number[] = [0];
 	const outputRange: any[] = [steps[0]];
-	// NEW: Initialize the array for our midpoint values
+
 	const pauseMidpoints: number[] = [];
 	let currentTime = 0;
 
@@ -155,7 +161,6 @@ export function createPausableRange(
 		outputRange.push(steps[i]);
 
 		if (i < numSteps - 1 && intermediatePauseDuration > 0) {
-			// NEW: Calculate and store the midpoint before updating currentTime
 			const midpoint = currentTime + intermediatePauseDuration / 2;
 			pauseMidpoints.push(midpoint);
 
@@ -171,4 +176,30 @@ export function createPausableRange(
 	}
 
 	return { inputRange, outputRange, pauseMidpoints };
+}
+
+export function dedent(
+	strings: TemplateStringsArray,
+	...values: unknown[]
+): string {
+	let fullString = strings.reduce(
+		(acc, str, i) => acc + str + (values[i] ?? ""),
+		"",
+	);
+
+	const lines = fullString.split("\n");
+	const minIndent = lines.reduce((min, line) => {
+		if (line.trim() === "") return min;
+		const indent = line.match(/^\s*/)?.[0].length ?? 0;
+		return Math.min(min, indent);
+	}, Infinity);
+
+	if (minIndent === Infinity) {
+		return fullString;
+	}
+
+	return lines
+		.map((line) => line.slice(minIndent))
+		.join("\n")
+		.trim();
 }
