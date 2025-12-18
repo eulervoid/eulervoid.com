@@ -127,11 +127,12 @@ function DitheredImage({
 
 	const [imageTexture, noiseTexture] = useTexture(
 		[imageUrl, noiseUrl],
-		([_, noise]) => {
+		([img, noise]) => {
 			noise.wrapS = noise.wrapT = RepeatWrapping;
-			setImageSize(
-				new Vector2(imageTexture.image.width, imageTexture.image.height),
-			);
+			if (img.image) {
+				const source = img.image as HTMLImageElement;
+				setImageSize(new Vector2(source.width, source.height));
+			}
 		},
 	);
 

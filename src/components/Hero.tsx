@@ -56,11 +56,11 @@ export function Hero() {
 					</Suspense>
 				</Canvas>
 			</div>
-			<div className="space-y-2 max-w-110 z-1 bg-black border px-8 py-6 ml-[-2rem]">
+			<div className="space-y-2 max-w-110 z-1 bg-black border px-8 py-6 -ml-8">
 				<h1>Hello!</h1>
 				<p>
-					I’m Josh, a software engineer and creative technologist based in
-					Berlin.
+					I’m Josh, a software engineer and creative technologist
+					based in Berlin.
 				</p>
 				<p className="whitespace-pre-wrap">
 					From first draft to execution, I can help you build{" "}

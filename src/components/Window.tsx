@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { forwardRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 
 type WindowProps = {
 	title: string;
@@ -14,6 +14,11 @@ type WindowProps = {
 	className?: string;
 };
 
+export type WindowHandle = {
+	getCloseButton: () => HTMLImageElement | null;
+	getWindow: () => HTMLDivElement | null;
+};
+
 const TOPBAR_HEIGHT = 32;
 
 function TopbarSpacer() {
@@ -26,13 +31,26 @@ function TopbarSpacer() {
 	);
 }
 
-export const Window = forwardRef<HTMLDivElement, WindowProps>(
+export const Window = forwardRef<WindowHandle, WindowProps>(
 	({ title, imageUrl, size, zIndex, closed = false, className = "" }, ref) => {
+		const windowRef = useRef<HTMLDivElement>(null);
+		const closeButtonRef = useRef<HTMLImageElement>(null);
+
+		useImperativeHandle(ref, () => ({
+			getCloseButton: () => closeButtonRef.current,
+			getWindow: () => windowRef.current,
+		}));
+
 		return (
 			<motion.div
-				ref={ref}
-				className={`border bg-black text-gray-300 ${className}`}
-				style={{ ...size, zIndex }}
+				ref={windowRef}
+				className={`border bg-black text-gray-300 flex flex-col ${className}`}
+				style={{
+					width: size.width,
+					maxWidth: "100%",
+					aspectRatio: `${size.width} / ${size.height}`,
+					zIndex,
+				}}
 				animate={{
 					opacity: closed ? 0 : 1,
 					scale: closed ? 0.8 : 1,
@@ -43,27 +61,22 @@ export const Window = forwardRef<HTMLDivElement, WindowProps>(
 				}}
 			>
 				<div
-					className="flex justify-between gap-2 items-center border-b px-2 py-1"
+					className="flex justify-between gap-2 items-center border-b px-2 py-1 shrink-0"
 					style={{ height: TOPBAR_HEIGHT }}
 				>
 					<img
+						ref={closeButtonRef}
 						src="/images/close.png"
-						className="w-[14px] pixel-art object-contain"
+						className="w-[14px] pixel-art object-contain cursor-pointer"
 					/>
 					<TopbarSpacer />
 					{title}
 					<TopbarSpacer />
 				</div>
-				<div
-					style={{ width: "100%", height: `calc(100% - ${TOPBAR_HEIGHT}px)` }}
-				>
+				<div className="flex-grow overflow-hidden">
 					<img src={imageUrl} className="w-full h-full object-cover" />
 				</div>
 			</motion.div>
 		);
 	},
 );
-
-export function closeButtonPosition(position: { top: number; left: number }) {
-	return { x: position.left + 5, y: position.top + 11 };
-}

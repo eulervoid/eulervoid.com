@@ -5,9 +5,12 @@ export function SceneLoader() {
 	// useProgress tracks the loading progress of assets for Suspense
 	const { progress } = useProgress();
 	return (
-		<Html center>
+		<Html center className="w-full h-full">
 			{/* You can style this however you want */}
-			<div style={{ fontSize: "1.5em", color: "white" }}>
+			<div
+				style={{ fontSize: "1.5em", color: "white" }}
+				className="bg-red-600"
+			>
 				Loading scene... {Math.round(progress)}%
 			</div>
 		</Html>

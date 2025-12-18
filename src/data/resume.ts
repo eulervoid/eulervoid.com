@@ -203,7 +203,7 @@ export const resume: ResumeEntry[] = [
 		begin: "2024-01-01",
 		end: "2025-03-30",
 		type: "Freelance",
-		role: "Freelance AI Developer",
+		role: "Freelance Software Engineer",
 		institution: "Enerithm Technology GmbH",
 		details: dedent`
 			Led the early stage development team building *Energuide* an AI based energy efficiency platform. 
@@ -226,6 +226,33 @@ export const resume: ResumeEntry[] = [
 			"PostgreSQL",
 			"Hetzner",
 			"Hashicorp Nomad",
+		],
+		pinned: true,
+	},
+	{
+		begin: "2025-06-01",
+		end: null,
+		type: "Freelance",
+		role: "Freelance Software Engineer",
+		institution: "Myceli.AI",
+		details: dedent`
+			Built payment infrastructure for pollinations.ai, a community focused AI platform.
+			- Build a new authentication system
+			- Payment provider integration
+			- Usage based spend tracking implementation for text and image generation
+		`,
+		link: {
+			url: "https://pollinations.ai",
+			text: "pollinations.ai",
+		},
+		technologies: [
+			"TypeScript",
+			"Hono",
+			"Polar.sh",
+			"Cloudflare Workers",
+			"React",
+			"TanStack",
+			"SQLite",
 		],
 		pinned: true,
 	},

@@ -11,6 +11,7 @@ import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { Footer } from "~/components/Footer";
 import { Navigation } from "~/components/Navigation";
 import { NotFound } from "~/components/NotFound";
+import { CursorProvider } from "~/components/SimulatedCursor";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 
@@ -86,9 +87,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
-				<Navigation />
-				{children}
-				<Footer />
+				<CursorProvider initialPosition={{ x: 100, y: 100 }}>
+					<Navigation />
+					{children}
+					<Footer />
+				</CursorProvider>
 				<TanStackRouterDevtools position="bottom-right" />
 				<Scripts />
 			</body>
