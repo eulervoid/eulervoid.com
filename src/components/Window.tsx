@@ -12,6 +12,8 @@ type WindowProps = {
 	zIndex: number;
 	onClick?: any;
 	className?: string;
+	animate?: any;
+	transition?: any;
 };
 
 export type WindowHandle = {
@@ -32,7 +34,19 @@ function TopbarSpacer() {
 }
 
 export const Window = forwardRef<WindowHandle, WindowProps>(
-	({ title, imageUrl, size, zIndex, closed = false, className = "" }, ref) => {
+	(
+		{
+			title,
+			imageUrl,
+			size,
+			zIndex,
+			closed = false,
+			className = "",
+			animate: extraAnimate = {},
+			transition: extraTransition = {},
+		},
+		ref,
+	) => {
 		const windowRef = useRef<HTMLDivElement>(null);
 		const closeButtonRef = useRef<HTMLImageElement>(null);
 
@@ -54,10 +68,12 @@ export const Window = forwardRef<WindowHandle, WindowProps>(
 				animate={{
 					opacity: closed ? 0 : 1,
 					scale: closed ? 0.8 : 1,
+					...extraAnimate,
 				}}
 				transition={{
 					duration: 0.3,
 					ease: "easeOut",
+					...extraTransition,
 				}}
 			>
 				<div
