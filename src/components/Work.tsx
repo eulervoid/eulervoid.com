@@ -47,10 +47,16 @@ export function Work({ seed = 42 }: WorkProps) {
 	return (
 		<div
 			id="work"
-			className="section border-t space-y-12"
+			style={{
+				backgroundImage:
+					"radial-gradient(circle, rgb(30 40 56) 1px, transparent 1px)",
+				backgroundSize: "32px 32px",
+				backgroundPosition: "center center",
+			}}
+			className="section border-t"
 			ref={containerRef}
 		>
-			<SectionHeader title="Work" />
+			<SectionHeader title="Work" className="mb-12" />
 			<Desktop windows={windows} />
 		</div>
 	);

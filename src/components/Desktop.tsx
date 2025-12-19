@@ -35,12 +35,8 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 	const [windows, setWindows] = useState<WindowState[]>([]);
 	const windowRefs = useRef<(WindowHandle | null)[]>([]);
 	const isSwapping = useRef(false);
-	const lastScrollY = useRef(0);
 
 	useLayoutEffect(() => {
-		if (typeof window !== "undefined") {
-			lastScrollY.current = window.scrollY;
-		}
 		if (initialWindows.length > 0) {
 			setWindows(
 				initialWindows.map((w, i) => ({
@@ -60,14 +56,13 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 		}
 	}, [initialWindows]);
 
+	// Store the queue of swaps to perform
+	const swapQueue = useRef<{ closestIdx: number; targetIdx: number }[]>([]);
+
 	useEffect(() => {
 		const handleScroll = () => {
 			if (isSwapping.current) return;
-
-			const currentScrollY = window.scrollY;
-			const scrollDirection =
-				currentScrollY > lastScrollY.current ? "down" : "up";
-			lastScrollY.current = currentScrollY;
+			if (swapQueue.current.length > 0) return; // Already have a queue planned
 
 			const windowElements = windowRefs.current
 				.map((ref) => ref?.getWindow())
@@ -76,69 +71,86 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 			if (windowElements.length < 2) return;
 
 			const viewportCenter = window.innerHeight / 2;
+			const allRects = windowElements.map((el) =>
+				el.getBoundingClientRect(),
+			);
 
-			// Find pair closest to viewport center
-			let closestPairIdx = -1;
-			let minPairDist = Infinity;
+			// Find window closest to viewport center
+			let closestIdx = -1;
+			let minDist = Infinity;
 
-			for (let i = 0; i < windowElements.length - 1; i++) {
-				const rectA = windowElements[i].getBoundingClientRect();
-				const rectB = windowElements[i + 1].getBoundingClientRect();
-				const pairCenterY =
-					(rectA.top +
-						rectA.height / 2 +
-						(rectB.top + rectB.height / 2)) /
-					2;
-				const dist = Math.abs(pairCenterY - viewportCenter);
-
-				if (dist < minPairDist) {
-					minPairDist = dist;
-					closestPairIdx = i;
+			for (let i = 0; i < allRects.length; i++) {
+				const rect = allRects[i];
+				const centerY = rect.top + rect.height / 2;
+				const dist = Math.abs(centerY - viewportCenter);
+				if (dist < minDist) {
+					minDist = dist;
+					closestIdx = i;
 				}
 			}
 
-			if (closestPairIdx === -1 || minPairDist > 300) return;
+			if (closestIdx === -1 || minDist > 300) return;
 
-			const i = closestPairIdx;
-			const j = i + 1;
-			const rectA = windowElements[i].getBoundingClientRect();
-			const rectB = windowElements[j].getBoundingClientRect();
+			const closestRect = allRects[closestIdx];
+			const closestZ = windows[closestIdx].zIndex;
 
-			// Check intersection
-			const overlaps =
-				rectA.left < rectB.right &&
-				rectA.right > rectB.left &&
-				rectA.top < rectB.bottom &&
-				rectA.bottom > rectB.top;
+			// Find all windows that overlap with the closest one and have higher z-index
+			const overlappingHigher: { idx: number; z: number }[] = [];
 
-			if (!overlaps) return;
+			for (let i = 0; i < allRects.length; i++) {
+				if (i === closestIdx) continue;
 
-			const winA = windows[i];
-			const winB = windows[j];
+				const rect = allRects[i];
+				const overlaps =
+					closestRect.left < rect.right &&
+					closestRect.right > rect.left &&
+					closestRect.top < rect.bottom &&
+					closestRect.bottom > rect.top;
 
-			const distACenter = Math.abs(
-				rectA.top + rectA.height / 2 - viewportCenter,
-			);
-			const distBCenter = Math.abs(
-				rectB.top + rectB.height / 2 - viewportCenter,
-			);
-
-			let shouldSwap = false;
-			if (scrollDirection === "down") {
-				// Scrolling down: Bring the lower window (winB) to front if it's closer to center
-				if (distBCenter < distACenter && winB.zIndex < winA.zIndex) {
-					shouldSwap = true;
-				}
-			} else {
-				// Scrolling up: Bring the upper window (winA) to front if it's closer to center
-				if (distACenter < distBCenter && winA.zIndex < winB.zIndex) {
-					shouldSwap = true;
+				if (overlaps && windows[i].zIndex > closestZ) {
+					overlappingHigher.push({ idx: i, z: windows[i].zIndex });
 				}
 			}
 
-			if (shouldSwap) {
-				isSwapping.current = true;
-				performSwap(i, j, rectA, rectB);
+			if (overlappingHigher.length === 0) return;
+
+			// Sort by z-index ascending - we need to swap with lowest first, then next, etc.
+			// This ensures we move up one layer at a time without jumping
+			overlappingHigher.sort((a, b) => a.z - b.z);
+
+			// Build the swap queue
+			swapQueue.current = overlappingHigher.map((item) => ({
+				closestIdx,
+				targetIdx: item.idx,
+			}));
+
+			// Start processing the queue
+			processSwapQueue();
+		};
+
+		const processSwapQueue = async () => {
+			if (swapQueue.current.length === 0) return;
+
+			const windowElements = windowRefs.current
+				.map((ref) => ref?.getWindow())
+				.filter(Boolean) as HTMLDivElement[];
+
+			const { closestIdx, targetIdx } = swapQueue.current.shift()!;
+
+			const rectA = windowElements[closestIdx]?.getBoundingClientRect();
+			const rectB = windowElements[targetIdx]?.getBoundingClientRect();
+
+			if (!rectA || !rectB) {
+				swapQueue.current = [];
+				return;
+			}
+
+			isSwapping.current = true;
+			await performSwap(closestIdx, targetIdx, rectA, rectB);
+
+			// Process next swap in queue
+			if (swapQueue.current.length > 0) {
+				processSwapQueue();
 			}
 		};
 
@@ -237,10 +249,10 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 				}
 			}
 
-			const duration = 0.4;
+			const duration = 0.5;
 			const transition = {
 				duration,
-				ease: [0.37, 0, 0.63, 1],
+				ease: [0.5, 0, 0.5, 1],
 				times: [0, 0.5, 1],
 			};
 
@@ -318,10 +330,7 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 	}
 
 	return (
-		<div
-			className="relative w-full h-full flex flex-col"
-			style={{ perspective: 1000 }}
-		>
+		<div className="relative w-full h-full flex flex-col pb-6">
 			{windows.map((window, index) => (
 				<Window
 					ref={(el) => {

@@ -12,6 +12,7 @@ import { Canvas } from "@react-three/fiber";
 import { Pixelate } from "./Pixelate";
 import { Preload } from "@react-three/drei";
 import { SceneLoader } from "./SceneLoader";
+import { WindowTopbar } from "./Window";
 
 export function Hero() {
 	const script: Script = chain(
@@ -56,23 +57,26 @@ export function Hero() {
 					</Suspense>
 				</Canvas>
 			</div>
-			<div className="space-y-2 max-w-110 z-1 bg-black border px-8 py-6 -ml-8">
-				<h1>Hello!</h1>
-				<p>
-					I’m Josh, a software engineer and creative technologist
-					based in Berlin.
-				</p>
-				<p className="whitespace-pre-wrap">
-					From first draft to execution, I can help you build{" "}
-					<span className="text-lime-300">
-						<Typewriter
-							initialText={"solutions"}
-							script={script}
-							repeat={true}
-						/>
-					</span>{" "}
-					that get you where you want to go.
-				</p>
+			<div className="max-w-110 z-1 bg-black border -ml-8">
+				<WindowTopbar title="Greeting" showCloseButton={false} />
+				<div className="space-y-2 px-8 py-7">
+					<h1>Hello!</h1>
+					<p>
+						I’m Josh, a software engineer and creative technologist
+						based in Berlin.
+					</p>
+					<p className="whitespace-pre-wrap">
+						From first draft to execution, I can help you build{" "}
+						<span className="text-lime-300">
+							<Typewriter
+								initialText={"solutions"}
+								script={script}
+								repeat={true}
+							/>
+						</span>{" "}
+						that get you where you want to go.
+					</p>
+				</div>
 			</div>
 		</div>
 	);
