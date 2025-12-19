@@ -10,7 +10,7 @@ type WorkProps = {
 const WINDOW_DATA = [
 	{
 		title: "objekt klein a",
-		imageUrl: "/images/smileys-dit.png",
+		imageUrl: "/images/work/futur01/futur01-01.jpg",
 	},
 	{
 		title: "Virtual Club",
@@ -47,12 +47,10 @@ export function Work({ seed = 42 }: WorkProps) {
 	return (
 		<div
 			id="work"
-			className="relative space-y-12 min-h-screen"
+			className="section border-t space-y-12"
 			ref={containerRef}
 		>
-			<div className="section pt-20 pb-6 grid grid-cols-4 gap-x-12 gap-y-3 border-b z-200 bg-black sticky">
-				<SectionHeader title="Work" />
-			</div>
+			<SectionHeader title="Work" />
 			<Desktop windows={windows} />
 		</div>
 	);

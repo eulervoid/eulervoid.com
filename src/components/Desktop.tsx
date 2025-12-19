@@ -90,8 +90,14 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 		return () => cancelAnimationFrame(rafId);
 	}, [controller, closeWindow, windows]);
 
+	function windowClasses(index: number): string {
+		const margin = index === 0 ? "" : "-mt-64";
+		const alignment = index % 2 === 0 ? "self-end" : "self-start";
+		return `${margin} ${alignment}`;
+	}
+
 	return (
-		<div className="relative w-full h-full flex flex-col section-padding pb-64">
+		<div className="relative w-full h-full flex flex-col">
 			{windows.map((window, index) => (
 				<Window
 					ref={(el) => {
@@ -103,7 +109,7 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 					size={window.size}
 					imageUrl={window.imageUrl}
 					closed={window.closed}
-					className={index === 0 ? "" : "-mt-32 md:-mt-64"}
+					className={windowClasses(index)}
 				/>
 			))}
 		</div>

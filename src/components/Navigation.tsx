@@ -3,7 +3,7 @@ import { Logo } from "./Logo";
 
 export function Navigation() {
 	return (
-		<div className="section flex justify-between items-center gap-4 h-24 border-b">
+		<div className="section-px flex justify-between items-center gap-4 h-24 border-b">
 			<Logo />
 			<div className="flex gap-7 items-center">
 				<Link

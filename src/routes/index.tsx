@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { About } from "~/components/About";
+import { Timeline } from "~/components/Timeline";
 import { Hero } from "~/components/Hero";
 import { Work } from "~/components/Work";
 
@@ -12,7 +12,7 @@ function Home() {
 		<div className="relative">
 			<Hero />
 			<Work />
-			<About />
+			<Timeline />
 		</div>
 	);
 }

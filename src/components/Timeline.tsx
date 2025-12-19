@@ -10,7 +10,7 @@ function formatDateRange(begin: string, end: string | null) {
 	return `${beginYear} — ${endYearOrPresent}`;
 }
 
-export function About() {
+export function Timeline() {
 	const title = "Timeline";
 	const description = dedent`
 		Since finishing my degree in Media Computer Science in 2015,
@@ -19,16 +19,8 @@ export function About() {
 		technical expertise.
 	`;
 	return (
-		<div id="about" className="section py-20 border-t space-y-12">
+		<div id="about" className="section border-t space-y-12">
 			<SectionHeader title={title} description={description} />
-			<div className="flex">
-				<img
-					src="/images/dude.gif"
-					width="64"
-					height="64"
-					className="pixel-art"
-				/>
-			</div>
 			{pinnedResume.map((entry, index) => (
 				<div
 					key={index}

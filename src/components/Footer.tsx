@@ -2,16 +2,16 @@ import { Link } from "@tanstack/react-router";
 
 export function Footer() {
 	return (
-		<div id="footer" className="section flex flex-col gap-18 py-20 border-t">
+		<div id="footer" className="section flex flex-col gap-18 border-t">
 			<div className="flex flex-col gap-2 max-w-100">
 				<h2>Let's talk!</h2>
 				<p>
-					Have a project in mind? I’ll be happy to hear from you and explore
-					together if it’s a good fit.
+					Have a project in mind? I’ll be happy to hear from you and
+					explore together if it’s a good fit.
 				</p>
 				<a
 					href="mailto:josh@eulervoid.com"
-					className="text-black bg-white self-start px-4 py-2 ligatures mt-7"
+					className="text-black bg-white self-start px-4 py-2 ligatures mt-7 hover:bg-lime-300"
 				>
 					josh@eulervoid.com
 				</a>
