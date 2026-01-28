@@ -40,10 +40,10 @@ export function Hero() {
 	);
 
 	return (
-		<div className="relative section flex flex-col justify-center h-[90vh] max-h-[680px] items-center md:items-start">
+		<div className="relative section flex flex-col justify-center min-h-[90vh] max-h-[680px] items-center md:items-start">
 			<div className="absolute inset-0 w-full h-full">
-				<Canvas orthographic>
-					<Suspense fallback={<SceneLoader />}>
+				<Suspense>
+					<Canvas orthographic>
 						<Pixelate pixelSize={2}>
 							<DitheredMedia
 								videoUrl="/videos/sand.mp4"
@@ -54,8 +54,8 @@ export function Hero() {
 							/>
 							<Preload all />
 						</Pixelate>
-					</Suspense>
-				</Canvas>
+					</Canvas>
+				</Suspense>
 			</div>
 			<div className="max-w-110 z-1 bg-black border md:-ml-8">
 				<WindowTopbar title="Greeting" showCloseButton={false} />

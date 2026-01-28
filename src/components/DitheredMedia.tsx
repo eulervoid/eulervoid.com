@@ -83,7 +83,6 @@ function DitheredVideo({
 		muted: true,
 		loop: true,
 		start: true,
-		unsuspend: "loadedmetadata",
 	});
 
 	const videoSize = new Vector2(
@@ -106,7 +105,9 @@ function DitheredVideo({
 				uTexture={videoTexture}
 				uBlueNoiseTexture={noiseTexture}
 				uTextureResolution={videoSize}
-				uNoiseResolution={new Vector2(noiseTexture.width, noiseTexture.height)}
+				uNoiseResolution={
+					new Vector2(noiseTexture.width, noiseTexture.height)
+				}
 				uContrast={contrast}
 				uBrightness={brightness}
 			/>

@@ -227,3 +227,7 @@ export function formatDateRange(begin: string, end: string | null) {
 	if (beginYear === endYearOrPresent) return beginYear;
 	return `${beginYear} — ${endYearOrPresent}`;
 }
+
+export const wrap = (value: number, modulus: number): number => {
+	return ((value % modulus) + modulus) % modulus;
+};

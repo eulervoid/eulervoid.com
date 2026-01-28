@@ -2,8 +2,6 @@ import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { Window, WindowHandle } from "~/components/Window";
 import { Tab, Tabs } from "./Tabs";
 import { type WorkEntry } from "~/data/work";
-import ReactMarkdown from "react-markdown";
-import { Taglist } from "./Taglist";
 import { WorkDetails } from "./WorkDetails";
 
 type AnimatedValue = number | [number, number, number];
@@ -317,7 +315,7 @@ export function Desktop({ entries }: DesktopProps) {
 	}, [windows]);
 
 	function windowClasses(index: number): string {
-		const margin = index === 0 ? "" : "mt-24 lg:-mt-38";
+		const margin = index === 0 ? "" : "mt-32 lg:-mt-38";
 		const alignment = index % 2 === 0 ? "self-start" : "self-end";
 		return `${margin} ${alignment}`;
 	}

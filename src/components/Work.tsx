@@ -1,9 +1,13 @@
 import { Desktop } from "./Desktop";
 import { useRef } from "react";
 import { SectionHeader } from "./SectionHeader";
-import { work } from "~/data/work";
+import { type WorkEntry } from "~/data/work";
 
-export function Work() {
+type WorkProps = {
+	entries: WorkEntry[];
+};
+
+export function Work({ entries }: WorkProps) {
 	const containerRef = useRef(null);
 
 	return (
@@ -19,7 +23,7 @@ export function Work() {
 			ref={containerRef}
 		>
 			<SectionHeader title="Work" className="mb-12" />
-			<Desktop entries={work} />
+			<Desktop entries={entries} />
 		</div>
 	);
 }

@@ -16,7 +16,16 @@ export default defineConfig({
 		tsConfigPaths({
 			projects: ["./tsconfig.json"],
 		}),
-		tanstackStart(),
+		tanstackStart({
+			prerender: {
+				enabled: true,
+				crawlLinks: true,
+			},
+			sitemap: {
+				enabled: true,
+				host: "https://eulervoid.com",
+			},
+		}),
 		tailwindcss(),
 		viteReact(),
 	],

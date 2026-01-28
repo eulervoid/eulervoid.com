@@ -6,6 +6,7 @@ import {
 	isValidElement,
 } from "react";
 import { twMerge } from "tailwind-merge";
+import { wrap } from "~/util";
 
 interface TabProps {
 	label: string;
@@ -83,10 +84,18 @@ function TabBarMinimal({
 	className,
 }: TabBarProps) {
 	return (
-		<div className={twMerge("flex justify-center", className)}>
+		<div
+			className={twMerge(
+				"flex place-content-center min-h-8",
+				border === "bottom"
+					? "row-start-1 border-b"
+					: "row-start-2 border-t",
+				className,
+			)}
+		>
 			<button
-				className="self-start"
-				onClick={() => onClick(Math.max(0, activeIndex - 1))}
+				className="flex flex-1 items-center justify-start px-2.5 py-1 text-xl leading-0"
+				onClick={() => onClick(wrap(activeIndex - 1, tabs.length))}
 			>
 				{"<"}
 			</button>
@@ -95,7 +104,7 @@ function TabBarMinimal({
 					key={tab.label}
 					onClick={() => onClick(index)}
 					className={twMerge(
-						"flex items-center gap-2 px-2 py-1",
+						"flex items-center px-2 py-1",
 						"cursor-pointer group",
 						activeIndex === index
 							? "text-white"
@@ -113,10 +122,8 @@ function TabBarMinimal({
 				</button>
 			))}
 			<button
-				className="self-start"
-				onClick={() =>
-					onClick(Math.min(tabs.length - 1, activeIndex + 1))
-				}
+				className="flex flex-1 items-center justify-end px-2.5 py-1 text-xl leading-0"
+				onClick={() => onClick(wrap(activeIndex + 1, tabs.length))}
 			>
 				{">"}
 			</button>
@@ -163,11 +170,11 @@ export const Tabs = ({ tabBar = "top", children }: TabsProps) => {
 			)}
 			<div
 				className={twMerge(
-					"w-full overflow-auto",
+					"w-full aspect-video",
 					tabBarTop ? "row-start-2" : "row-start-1",
 				)}
 			>
-				{tabs[activeIndex]}
+				{tabs[activeIndex]?.props?.children}
 			</div>
 		</div>
 	);
