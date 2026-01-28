@@ -317,8 +317,8 @@ export function Desktop({ entries }: DesktopProps) {
 	}, [windows]);
 
 	function windowClasses(index: number): string {
-		const margin = index === 0 ? "" : "-mt-34";
-		const alignment = index % 2 === 0 ? "self-end" : "self-start";
+		const margin = index === 0 ? "" : "mt-24 lg:-mt-38";
+		const alignment = index % 2 === 0 ? "self-start" : "self-end";
 		return `${margin} ${alignment}`;
 	}
 
@@ -350,7 +350,7 @@ export function Desktop({ entries }: DesktopProps) {
 							>
 								<img
 									src={media.url}
-									className="w-full h-full object-cover"
+									className="w-full h-full object-cover object-center"
 								/>
 							</Tab>
 						))}

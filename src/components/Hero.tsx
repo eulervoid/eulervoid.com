@@ -59,7 +59,7 @@ export function Hero() {
 			</div>
 			<div className="max-w-110 z-1 bg-black border md:-ml-8">
 				<WindowTopbar title="Greeting" showCloseButton={false} />
-				<div className="space-y-2 px-8 py-7">
+				<div className="space-y-2 px-5 md:px-8 py-7">
 					<h1>Hello!</h1>
 					<p>
 						I’m Josh, a software engineer and creative technologist

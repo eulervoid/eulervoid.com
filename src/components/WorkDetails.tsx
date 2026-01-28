@@ -19,15 +19,20 @@ export function WorkDetails({ entry }: WorkDetailsProps) {
 				</div>
 				<ReactMarkdown>{entry.description}</ReactMarkdown>
 			</div>
-			<div className="grid grid-cols-5">
+			<div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
 				<Taglist
 					title="links"
 					tags={entry.links}
-					className="col-span-2"
+					className="col-span-3 md:col-span-2"
 				/>
 				{Object.entries(entry.technology).map(
 					([groupName, groupTags]) => (
-						<Taglist title={groupName} tags={groupTags} />
+						<Taglist
+							key={groupName}
+							title={groupName}
+							tags={groupTags}
+							className="col-span-1"
+						/>
 					),
 				)}
 			</div>

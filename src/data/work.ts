@@ -184,6 +184,7 @@ const entries: WorkEntry[] = [
 		categories: ["Design", "Development"],
 		technology: {
 			languages: ["Rust", "Python"],
+			libraries: ["bpy", "ffmpeg"],
 			software: ["Blender", "Figma", "Affinity Designer"],
 		},
 		links: [

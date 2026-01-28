@@ -21,6 +21,109 @@ interface TabsProps {
 	children: ReactElement<TabProps> | ReactElement<TabProps>[];
 }
 
+type TabBarProps = {
+	tabs: TabProps[];
+	activeIndex: number;
+	border: "top" | "bottom";
+	onClick: (index: number) => void;
+	className?: string;
+};
+
+function TabBar({
+	tabs,
+	activeIndex,
+	border,
+	onClick,
+	className,
+}: TabBarProps) {
+	return (
+		<div
+			className={twMerge(
+				"flex justify-center divide-x",
+				border === "bottom"
+					? "row-start-1 border-b"
+					: "row-start-2 border-t",
+				className,
+			)}
+		>
+			<span />
+			{tabs.map((tab, index) => (
+				<button
+					key={tab.label}
+					onClick={() => onClick(index)}
+					className={twMerge(
+						"flex items-center gap-2 px-4 py-1",
+						"cursor-pointer group",
+						activeIndex === index
+							? "text-white"
+							: "text-gray-600 hover:text-gray-400",
+					)}
+				>
+					<div
+						className={twMerge(
+							"w-1.5 h-1.5",
+							activeIndex === index
+								? "bg-white"
+								: "bg-gray-600 group-hover:bg-gray-400",
+						)}
+					/>
+					{tab.label}
+				</button>
+			))}
+			<span />
+		</div>
+	);
+}
+
+function TabBarMinimal({
+	tabs,
+	activeIndex,
+	border,
+	onClick,
+	className,
+}: TabBarProps) {
+	return (
+		<div className={twMerge("flex justify-center", className)}>
+			<button
+				className="self-start"
+				onClick={() => onClick(Math.max(0, activeIndex - 1))}
+			>
+				{"<"}
+			</button>
+			{tabs.map((tab, index) => (
+				<button
+					key={tab.label}
+					onClick={() => onClick(index)}
+					className={twMerge(
+						"flex items-center gap-2 px-2 py-1",
+						"cursor-pointer group",
+						activeIndex === index
+							? "text-white"
+							: "text-gray-600 hover:text-gray-400",
+					)}
+				>
+					<div
+						className={twMerge(
+							"w-1.5 h-1.5",
+							activeIndex === index
+								? "bg-white"
+								: "bg-gray-600 group-hover:bg-gray-400",
+						)}
+					/>
+				</button>
+			))}
+			<button
+				className="self-start"
+				onClick={() =>
+					onClick(Math.min(tabs.length - 1, activeIndex + 1))
+				}
+			>
+				{">"}
+			</button>
+		</div>
+	);
+}
+
 export const Tabs = ({ tabBar = "top", children }: TabsProps) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 
@@ -41,40 +144,22 @@ export const Tabs = ({ tabBar = "top", children }: TabsProps) => {
 			)}
 		>
 			{tabBarVisible && (
-				<div
-					className={twMerge(
-						"flex justify-center divide-x",
-						tabBarTop
-							? "row-start-1 border-b"
-							: "row-start-2 border-t",
-					)}
-				>
-					<span />
-					{tabs.map((tab, index) => (
-						<button
-							key={tab.key}
-							onClick={() => setActiveIndex(index)}
-							className={twMerge(
-								"flex items-center gap-2 px-4 py-1",
-								"cursor-pointer group",
-								activeIndex === index
-									? "text-white"
-									: "text-gray-600 hover:text-gray-400",
-							)}
-						>
-							<div
-								className={twMerge(
-									"w-1.5 h-1.5",
-									activeIndex === index
-										? "bg-white"
-										: "bg-gray-600 group-hover:bg-gray-400",
-								)}
-							/>
-							{tab.props.label}
-						</button>
-					))}
-					<span />
-				</div>
+				<>
+					<TabBar
+						tabs={tabs.map((t) => t.props)}
+						activeIndex={activeIndex}
+						onClick={setActiveIndex}
+						border={tabBarTop ? "bottom" : "top"}
+						className="not-md:hidden"
+					/>
+					<TabBarMinimal
+						tabs={tabs.map((t) => t.props)}
+						activeIndex={activeIndex}
+						onClick={setActiveIndex}
+						border={tabBarTop ? "bottom" : "top"}
+						className="md:hidden"
+					/>
+				</>
 			)}
 			<div
 				className={twMerge(

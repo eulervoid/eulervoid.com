@@ -18,18 +18,19 @@ export function Footer() {
 					josh@eulervoid.com
 				</a>
 			</div>
-			<div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-3">
-				<span>(c) 2025</span>
-				<Link to="/imprint" className={`md:col-start-3 ${linkClass}`}>
+			<div className="grid grid-rows-5 md:grid-rows-2 grid-flow-col gap-x-12 gap-y-3">
+				<span className="col-span-2">(c) 2025</span>
+				<span className="text-white col-span-2">eulervoid.com</span>
+				<span className="col-span-2 md:hidden" />
+				<Link to="/imprint" className={linkClass}>
 					Imprint
+				</Link>
+				<Link to="/privacy" className={linkClass}>
+					Privacy
 				</Link>
 				<a href="https://github.com/eulervoid" className={linkClass}>
 					Github
 				</a>
-				<span className="text-white">eulervoid.com</span>
-				<Link to="/privacy" className={`md:col-start-3 ${linkClass}`}>
-					Privacy
-				</Link>
 				<a href="https://instagram.com/eulervoid" className={linkClass}>
 					Instagram
 				</a>
