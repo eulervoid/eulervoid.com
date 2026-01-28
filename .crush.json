@@ -5,5 +5,12 @@
 			"command": "typescript-language-server",
 			"args": ["--stdio"]
 		}
+	},
+	"mcp": {
+		"chrome-devtools": {
+			"type": "stdio",
+			"command": "bunx",
+			"args": ["-y", "chrome-devtools-mcp@latest"]
+		}
 	}
 }

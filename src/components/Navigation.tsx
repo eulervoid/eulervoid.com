@@ -13,18 +13,20 @@ export function Navigation() {
 					}}
 					hash="work"
 					activeOptions={{ exact: true }}
+					className="hidden md:block hover:text-lime-300"
 				>
 					Work
 				</Link>
 				<Link
 					to="/"
-					hash="about"
+					hash="timeline"
 					activeProps={{
 						className: "font-bold",
 					}}
 					activeOptions={{ exact: true }}
+					className="hidden md:block hover:text-lime-300"
 				>
-					About
+					Timeline
 				</Link>
 				<Link
 					to="/"
@@ -33,7 +35,7 @@ export function Navigation() {
 						className: "font-bold",
 					}}
 					activeOptions={{ exact: true }}
-					className="text-black bg-white px-3 py-1"
+					className="text-black bg-white px-3 py-1 hover:bg-lime-300"
 				>
 					Contact
 				</Link>

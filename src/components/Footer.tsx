@@ -18,16 +18,16 @@ export function Footer() {
 					josh@eulervoid.com
 				</a>
 			</div>
-			<div className="grid grid-cols-4 gap-x-12 gap-y-3">
+			<div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-3">
 				<span>(c) 2025</span>
-				<Link to="/imprint" className={`col-start-3 ${linkClass}`}>
+				<Link to="/imprint" className={`md:col-start-3 ${linkClass}`}>
 					Imprint
 				</Link>
 				<a href="https://github.com/eulervoid" className={linkClass}>
 					Github
 				</a>
 				<span className="text-white">eulervoid.com</span>
-				<Link to="/privacy" className={`col-start-3 ${linkClass}`}>
+				<Link to="/privacy" className={`md:col-start-3 ${linkClass}`}>
 					Privacy
 				</Link>
 				<a href="https://instagram.com/eulervoid" className={linkClass}>

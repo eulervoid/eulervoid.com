@@ -144,7 +144,10 @@ export function createPausableRange(
 		return { inputRange, outputRange: steps, pauseMidpoints: [] };
 	}
 
-	const clampedPausePercentage = Math.max(0, Math.min(1, totalPausePercentage));
+	const clampedPausePercentage = Math.max(
+		0,
+		Math.min(1, totalPausePercentage),
+	);
 	const unitDuration = clampedPausePercentage / totalWeightUnits;
 
 	const startPauseDuration = startWeight * unitDuration;
@@ -193,7 +196,7 @@ export function dedent(
 	...values: unknown[]
 ): string {
 	let fullString = strings.reduce(
-		(acc, str, i) => acc + str + (values[i] ?? ""),
+		(acc, str, i) => `${acc}${str}${values[i] ?? ""}`,
 		"",
 	);
 
@@ -212,4 +215,15 @@ export function dedent(
 		.map((line) => line.slice(minIndent))
 		.join("\n")
 		.trim();
+}
+
+export function lines(...strings: string[]): string {
+	return strings.join("\n");
+}
+
+export function formatDateRange(begin: string, end: string | null) {
+	const beginYear = new Date(begin).getFullYear();
+	const endYearOrPresent = end ? new Date(end).getFullYear() : "PRESENT";
+	if (beginYear === endYearOrPresent) return beginYear;
+	return `${beginYear} — ${endYearOrPresent}`;
 }

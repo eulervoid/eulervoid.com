@@ -30,6 +30,14 @@ body {
   @apply mx-auto border-l border-r;
 }
 
+p {
+  @apply text-gray-400;
+}
+
+a {
+  @apply hover:text-lime-300;
+}
+
 h1, h2, h3, h4, h5, h6 { 
   @apply font-heading text-white; 
 }
@@ -93,7 +101,7 @@ li:last-child {
 }
 
 @utility section-px {
-  @apply px-12 lg:px-[120px];
+  @apply px-4 sm:px-8 md:px-16 lg:px-[120px];
 }
 
 @utility section-py {

@@ -1,5 +1,11 @@
 import { motion } from "motion/react";
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import {
+	forwardRef,
+	PropsWithChildren,
+	useImperativeHandle,
+	useRef,
+} from "react";
+import { twMerge } from "tailwind-merge";
 
 type WindowTopbarProps = {
 	title: string;
@@ -10,21 +16,16 @@ type WindowTopbarHandle = {
 	getCloseButton: () => HTMLImageElement | null;
 };
 
-type WindowProps = {
+type WindowProps = PropsWithChildren<{
 	title: string;
 	showCloseButton?: boolean;
-	imageUrl: string;
 	closed: boolean;
-	size: {
-		width: number;
-		height: number;
-	};
 	zIndex: number;
 	onClick?: any;
 	className?: string;
 	animate?: any;
 	transition?: any;
-};
+}>;
 
 export type WindowHandle = {
 	getCloseButton: () => HTMLImageElement | null;
@@ -53,8 +54,11 @@ export const WindowTopbar = forwardRef<WindowTopbarHandle, WindowTopbarProps>(
 
 		return (
 			<div
-				className="flex justify-between gap-2 items-center border-b px-2 py-1 shrink-0"
-				style={{ height: TOPBAR_HEIGHT }}
+				className={twMerge(
+					"flex justify-between gap-2 items-center",
+					"border-b px-2 py-1",
+					`h-[${TOPBAR_HEIGHT}px]`,
+				)}
 			>
 				{showCloseButton && (
 					<img
@@ -76,13 +80,12 @@ export const Window = forwardRef<WindowHandle, WindowProps>(
 		{
 			title,
 			showCloseButton = true,
-			imageUrl,
-			size,
 			zIndex,
 			closed = false,
 			className = "",
 			animate: extraAnimate = {},
 			transition: extraTransition = {},
+			children,
 		},
 		ref,
 	) => {
@@ -97,11 +100,15 @@ export const Window = forwardRef<WindowHandle, WindowProps>(
 		return (
 			<motion.div
 				ref={windowRef}
-				className={`border bg-black text-gray-300 flex flex-col shadow-[6px_6px_0px_rgba(0,0,0,0.2)] ${className}`}
+				className={twMerge(
+					"border bg-black text-gray-300 flex flex-col flex-1",
+					"overflow-hidden max-w-full divide-y",
+					"shadow-[6px_6px_0px_rgba(0,0,0,0.2)]",
+					className,
+				)}
 				style={{
-					width: size.width,
+					width: "700px",
 					maxWidth: "100%",
-					aspectRatio: `${size.width} / ${size.height}`,
 					zIndex,
 				}}
 				animate={{
@@ -120,18 +127,7 @@ export const Window = forwardRef<WindowHandle, WindowProps>(
 					ref={topbarRef}
 					showCloseButton={showCloseButton}
 				/>
-				<div className="grow overflow-hidden">
-					<img
-						src={imageUrl}
-						className="w-full h-full object-cover"
-					/>
-				</div>
-				<div className="flex justify-between gap-2 items-center border-t px-2 py-2 shrink-0">
-					test
-				</div>
-				<div className="flex justify-between gap-2 items-center border-t px-2 py-2 shrink-0">
-					test
-				</div>
+				<div className="flex-1 min-h-20 divide-y">{children}</div>
 			</motion.div>
 		);
 	},

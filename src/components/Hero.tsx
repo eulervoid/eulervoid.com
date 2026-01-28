@@ -40,7 +40,7 @@ export function Hero() {
 	);
 
 	return (
-		<div className="relative section flex flex-col justify-center h-[80vh] max-h-[680px]">
+		<div className="relative section flex flex-col justify-center h-[90vh] max-h-[680px] items-center md:items-start">
 			<div className="absolute inset-0 w-full h-full">
 				<Canvas orthographic>
 					<Suspense fallback={<SceneLoader />}>
@@ -57,7 +57,7 @@ export function Hero() {
 					</Suspense>
 				</Canvas>
 			</div>
-			<div className="max-w-110 z-1 bg-black border -ml-8">
+			<div className="max-w-110 z-1 bg-black border md:-ml-8">
 				<WindowTopbar title="Greeting" showCloseButton={false} />
 				<div className="space-y-2 px-8 py-7">
 					<h1>Hello!</h1>

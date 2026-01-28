@@ -134,8 +134,8 @@ export const resume: ResumeEntry[] = [
 		institution: "Center for Tactile Internet, TU Dresden",
 		details: dedent`
 			Helped create promotional tech-demos with Unity:
-			- A live-animated avatar playing piano while wearing a mocap suit
-			- Virtual surfing mini-game with a physical board as a controller
+			- An animated avatar mirroring the live performance of a piano player wearing a mocap suit
+			- A surfing mini-game using a real surfboard as a controller
 		`,
 		link: {
 			url: "https://ceti.one/",

@@ -1,14 +1,7 @@
 import { pinnedResume } from "~/data/resume";
 import ReactMarkdown from "react-markdown";
 import { SectionHeader } from "./SectionHeader";
-import { dedent } from "~/util";
-
-function formatDateRange(begin: string, end: string | null) {
-	const beginYear = new Date(begin).getFullYear();
-	const endYearOrPresent = end ? new Date(end).getFullYear() : "PRESENT";
-	if (beginYear === endYearOrPresent) return beginYear;
-	return `${beginYear} — ${endYearOrPresent}`;
-}
+import { dedent, formatDateRange } from "~/util";
 
 export function Timeline() {
 	const title = "Timeline";

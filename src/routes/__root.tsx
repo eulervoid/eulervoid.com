@@ -52,12 +52,7 @@ export const Route = createRootRoute({
 			{ rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
 			{ rel: "icon", href: "/favicon.ico" },
 		],
-		scripts: [
-			// {
-			// 	src: "/customScript.js",
-			// 	type: "text/javascript",
-			// },
-		],
+		scripts: [],
 	}),
 	errorComponent: (props) => {
 		return (
@@ -87,11 +82,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
-				<CursorProvider initialPosition={{ x: 100, y: 100 }}>
-					<Navigation />
-					{children}
-					<Footer />
-				</CursorProvider>
+				<Navigation />
+				{children}
+				<Footer />
 				<TanStackRouterDevtools position="bottom-right" />
 				<Scripts />
 			</body>

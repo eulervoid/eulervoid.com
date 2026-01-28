@@ -1,52 +1,49 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { Window, WindowHandle } from "~/components/Window";
+import { Tab, Tabs } from "./Tabs";
+import { type WorkEntry } from "~/data/work";
+import ReactMarkdown from "react-markdown";
+import { Taglist } from "./Taglist";
+import { WorkDetails } from "./WorkDetails";
 
-type WindowData = {
-	title: string;
-	imageUrl: string;
-	size?: {
-		width?: number;
-		height?: number;
-	};
-};
+type AnimatedValue = number | [number, number, number];
 
-type WindowState = WindowData & {
+type WindowState = {
 	size: {
 		width: number;
 		height: number;
 	};
 	closed: boolean;
 	zIndex: number;
-	xOffset: any;
-	yOffset: any;
-	rotateY: any;
-	scale: any;
+	xOffset: AnimatedValue;
+	yOffset: AnimatedValue;
+	rotateY: AnimatedValue;
+	scale: AnimatedValue;
 	transition?: any;
 };
 
 type DesktopProps = {
-	windows: WindowData[];
+	entries: WorkEntry[];
 };
 
-const DEFAULT_WINDOW_HEIGHT = 300;
-const DEFAULT_WINDOW_WIDTH = 500;
+const DEFAULT_WINDOW_HEIGHT = 480;
+const DEFAULT_WINDOW_WIDTH = 640;
 
-export function Desktop({ windows: initialWindows }: DesktopProps) {
+export function Desktop({ entries }: DesktopProps) {
 	const [windows, setWindows] = useState<WindowState[]>([]);
 	const windowRefs = useRef<(WindowHandle | null)[]>([]);
 	const isSwapping = useRef(false);
 
 	useLayoutEffect(() => {
-		if (initialWindows.length > 0) {
+		if (entries?.length > 0) {
 			setWindows(
-				initialWindows.map((w, i) => ({
-					...w,
+				entries.map((_, index) => ({
 					size: {
-						width: w.size?.width || DEFAULT_WINDOW_WIDTH,
-						height: w.size?.height || DEFAULT_WINDOW_HEIGHT,
+						width: DEFAULT_WINDOW_WIDTH,
+						height: DEFAULT_WINDOW_HEIGHT,
 					},
 					closed: false,
-					zIndex: 100 - i,
+					zIndex: 100 - index,
 					xOffset: 0,
 					yOffset: 0,
 					rotateY: 0,
@@ -54,7 +51,7 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 				})),
 			);
 		}
-	}, [initialWindows]);
+	}, [entries]);
 
 	// Store the queue of swaps to perform
 	const swapQueue = useRef<{ closestIdx: number; targetIdx: number }[]>([]);
@@ -95,7 +92,7 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 			const closestZ = windows[closestIdx].zIndex;
 
 			// Find all windows that overlap with the closest one and have higher z-index
-			const overlappingHigher: { idx: number; z: number }[] = [];
+			const occluding: { idx: number; z: number }[] = [];
 
 			for (let i = 0; i < allRects.length; i++) {
 				if (i === closestIdx) continue;
@@ -108,18 +105,15 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 					closestRect.bottom > rect.top;
 
 				if (overlaps && windows[i].zIndex > closestZ) {
-					overlappingHigher.push({ idx: i, z: windows[i].zIndex });
+					occluding.push({ idx: i, z: windows[i].zIndex });
 				}
 			}
 
-			if (overlappingHigher.length === 0) return;
-
-			// Sort by z-index ascending - we need to swap with lowest first, then next, etc.
-			// This ensures we move up one layer at a time without jumping
-			overlappingHigher.sort((a, b) => a.z - b.z);
+			if (occluding.length === 0) return;
+			occluding.sort((a, b) => a.z - b.z);
 
 			// Build the swap queue
-			swapQueue.current = overlappingHigher.map((item) => ({
+			swapQueue.current = occluding.map((item) => ({
 				closestIdx,
 				targetIdx: item.idx,
 			}));
@@ -192,7 +186,7 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 				Math.min(rectA.bottom, rectB.bottom) -
 				Math.max(rectA.top, rectB.top);
 
-			const isARight = idxA % 2 === 0;
+			const isARight = rectA.left > rectB.left;
 			const isAAbove = rectA.top < rectB.top;
 
 			// Horizontal offset for natural feel
@@ -256,7 +250,6 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 				times: [0, 0.5, 1],
 			};
 
-			// Window coming to front scales up, window going to back scales down
 			const goingToBack = zA > zB ? idxA : idxB;
 
 			setWindows((prev) => {
@@ -324,39 +317,46 @@ export function Desktop({ windows: initialWindows }: DesktopProps) {
 	}, [windows]);
 
 	function windowClasses(index: number): string {
-		const margin = index === 0 ? "" : "-mt-64";
+		const margin = index === 0 ? "" : "-mt-34";
 		const alignment = index % 2 === 0 ? "self-end" : "self-start";
 		return `${margin} ${alignment}`;
 	}
 
 	return (
 		<div className="relative w-full h-full flex flex-col pb-6">
-			{windows.map((window, index) => (
+			{windows.map((window, windowIndex) => (
 				<Window
 					ref={(el) => {
-						windowRefs.current[index] = el;
+						windowRefs.current[windowIndex] = el;
 					}}
-					key={window.title}
+					key={entries[windowIndex].title}
 					zIndex={window.zIndex}
-					title={window.title}
-					size={window.size}
-					imageUrl={window.imageUrl}
+					title={entries[windowIndex].title}
 					closed={window.closed}
-					className={windowClasses(index)}
+					className={windowClasses(windowIndex)}
 					animate={{
 						x: window.xOffset,
 						y: window.yOffset,
 						rotateY: window.rotateY,
 						scale: window.scale,
 					}}
-					transition={
-						window.transition || {
-							type: "spring",
-							stiffness: 120,
-							damping: 20,
-						}
-					}
-				/>
+					transition={window.transition}
+				>
+					<Tabs tabBar="bottom">
+						{entries[windowIndex].media.map((media, mediaIndex) => (
+							<Tab
+								key={media.url}
+								label={media.label || `image-${mediaIndex}.png`}
+							>
+								<img
+									src={media.url}
+									className="w-full h-full object-cover"
+								/>
+							</Tab>
+						))}
+					</Tabs>
+					<WorkDetails entry={entries[windowIndex]} />
+				</Window>
 			))}
 		</div>
 	);
