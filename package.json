@@ -6,7 +6,9 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && tsc --noEmit",
-		"start": "node .output/server/index.mjs"
+		"start": "node .output/server/index.mjs",
+		"fmt": "oxfmt",
+		"fmt:check": "oxfmt --check"
 	},
 	"dependencies": {
 		"@react-three/drei": "^10.7.7",
@@ -36,6 +38,7 @@
 		"@types/node": "^25.1.0",
 		"@types/react": "^19.2.10",
 		"@types/react-dom": "^19.2.3",
+		"oxfmt": "^0.27.0",
 		"typescript": "^5.9.3",
 		"vite-tsconfig-paths": "^6.0.5"
 	}
