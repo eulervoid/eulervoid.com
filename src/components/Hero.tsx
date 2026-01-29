@@ -1,11 +1,8 @@
-import { Suspense } from "react";
-import { DitheredMedia } from "./DitheredMedia";
+import { lazy, Suspense } from "react";
 import { Typewriter, Script, chain, deleteText, writeText, pause } from "./Typewriter";
-import { Canvas } from "@react-three/fiber";
-import { Pixelate } from "./Pixelate";
-import { Preload } from "@react-three/drei";
-import { SceneLoader } from "./SceneLoader";
 import { WindowTopbar } from "./Window";
+
+const HeroVideoWebGL = lazy(() => import("./HeroVideoWebGL"));
 
 export function Hero() {
     const script: Script = chain(
@@ -36,18 +33,13 @@ export function Hero() {
         <div className="relative section flex flex-col justify-center min-h-[90vh] max-h-[680px] items-center md:items-start">
             <div className="absolute inset-0 w-full h-full">
                 <Suspense>
-                    <Canvas orthographic>
-                        <Pixelate pixelSize={2}>
-                            <DitheredMedia
-                                videoUrl="/videos/sand.mp4"
-                                imageUrl="/images/smileys.jpg"
-                                noiseUrl="/images/blue_noise/64_LDR_LLL1_8.png"
-                                brightness={1.0}
-                                contrast={0.5}
-                            />
-                            <Preload all />
-                        </Pixelate>
-                    </Canvas>
+                    <HeroVideoWebGL
+                        videoUrl="/videos/sand.mp4"
+                        imageUrl="/images/smileys.jpg"
+                        noiseUrl="/images/blue_noise/64_LDR_LLL1_8.png"
+                        brightness={1.0}
+                        contrast={0.5}
+                    />
                 </Suspense>
             </div>
             <div className="max-w-110 z-1 bg-black border md:-ml-8">

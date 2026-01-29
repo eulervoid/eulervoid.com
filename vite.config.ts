@@ -1,18 +1,37 @@
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import { defineConfig } from "vite";
+import { defineConfig, Plugin } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
+import { existsSync } from "fs";
+import { resolve } from "path";
+
+function requireFiles(files: string[]): Plugin {
+    return {
+        name: "require-files",
+        buildStart() {
+            for (const filePath of files) {
+                const fullPath = resolve(filePath);
+                if (!existsSync(fullPath)) {
+                    throw new Error(`Missing required file: ${filePath}`);
+                }
+            }
+        },
+    };
+}
 
 export default defineConfig({
     server: {
         port: 3000,
-        watch: {
-            // Use polling to fix HMR in some environments
-            usePolling: true,
-        },
     },
     plugins: [
+        // Make sure paid fonts are present
+        requireFiles([
+            "public/fonts/Mondwest-Regular.woff",
+            "public/fonts/Mondwest-Regular.woff2",
+            "public/fonts/DepartureMono-Regular.woff",
+            "public/fonts/DepartureMono-Regular.woff2",
+        ]),
         tsConfigPaths({
             projects: ["./tsconfig.json"],
         }),

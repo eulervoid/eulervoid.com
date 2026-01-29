@@ -70,7 +70,7 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-function createShader(gl: WebGLRenderingContext, type: number, source: string) {
+function createShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
     const shader = gl.createShader(type);
     if (!shader) return null;
     gl.shaderSource(shader, source);
@@ -87,7 +87,7 @@ function createProgram(
     gl: WebGLRenderingContext,
     vertexShader: WebGLShader,
     fragmentShader: WebGLShader,
-) {
+): WebGLProgram | null {
     const program = gl.createProgram();
     if (!program) return null;
     gl.attachShader(program, vertexShader);
@@ -122,7 +122,6 @@ type HeroVideoWebGLProps = {
 
 export default function HeroVideoWebGL({
     videoUrl,
-    imageUrl,
     noiseUrl,
     brightness = 1.0,
     contrast = 0.5,
@@ -154,7 +153,7 @@ export default function HeroVideoWebGL({
         const program = createProgram(gl, vertexShader, fragmentShader);
         if (!program) return;
 
-        // Look up uniform locations once
+        // Look up uniform locations
         const uTextureLoc = gl.getUniformLocation(program, "uTexture");
         const uBlueNoiseTextureLoc = gl.getUniformLocation(program, "uBlueNoiseTexture");
         const uResolutionLoc = gl.getUniformLocation(program, "uResolution");
@@ -186,21 +185,13 @@ export default function HeroVideoWebGL({
         let animationId: number;
         let isActive = true;
         let noiseSize = { width: 64, height: 64 };
-        let cssWidth = 0;
-        let cssHeight = 0;
+        let resizeTimeout: number | null = null;
 
         const resize = (displayWidth: number, displayHeight: number) => {
-            // Ensure we maintain aspect ratio by using the exact display dimensions
-            // divided by pixelSize, rounded to integers
             const width = Math.max(1, Math.round(displayWidth / pixelSize));
             const height = Math.max(1, Math.round(displayHeight / pixelSize));
-
-            if (canvas.width !== width || canvas.height !== height) {
-                canvas.width = width;
-                canvas.height = height;
-            }
-            cssWidth = displayWidth;
-            cssHeight = displayHeight;
+            canvas.width = width;
+            canvas.height = height;
             gl.viewport(0, 0, width, height);
         };
 
@@ -222,10 +213,12 @@ export default function HeroVideoWebGL({
             gl.bindTexture(gl.TEXTURE_2D, noiseTexture);
             gl.uniform1i(uBlueNoiseTextureLoc, 1);
 
-            gl.uniform2f(uResolutionLoc, cssWidth, cssHeight);
-            const vidWidth = video.videoWidth || 1920;
-            const vidHeight = video.videoHeight || 1080;
-            gl.uniform2f(uTextureResolutionLoc, vidWidth, vidHeight);
+            gl.uniform2f(uResolutionLoc, canvas.width, canvas.height);
+            gl.uniform2f(
+                uTextureResolutionLoc,
+                video.videoWidth || 1920,
+                video.videoHeight || 1080,
+            );
             gl.uniform2f(uNoiseResolutionLoc, noiseSize.width, noiseSize.height);
             gl.uniform1f(uContrastLoc, contrast);
             gl.uniform1f(uBrightnessLoc, brightness);
@@ -257,10 +250,6 @@ export default function HeroVideoWebGL({
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-                // Initial resize using canvas bounding rect
-                const rect = canvas.getBoundingClientRect();
-                resize(rect.width, rect.height);
-
                 video.muted = true;
                 video.loop = true;
                 video.playsInline = true;
@@ -287,11 +276,16 @@ export default function HeroVideoWebGL({
 
         init();
 
-        // Use ResizeObserver for more accurate element size detection
         const resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 const { width, height } = entry.contentRect;
-                resize(width, height);
+                // Debounce resize to prevent canvas flash
+                if (resizeTimeout) {
+                    clearTimeout(resizeTimeout);
+                }
+                resizeTimeout = window.setTimeout(() => {
+                    resize(width, height);
+                }, 10);
             }
         });
         resizeObserver.observe(canvas);
@@ -299,6 +293,9 @@ export default function HeroVideoWebGL({
         return () => {
             isActive = false;
             cancelAnimationFrame(animationId);
+            if (resizeTimeout) {
+                clearTimeout(resizeTimeout);
+            }
             resizeObserver.disconnect();
             if (gl) {
                 gl.deleteProgram(program);
