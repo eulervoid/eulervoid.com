@@ -13,7 +13,7 @@ export function Timeline() {
 		technical expertise.
 	`;
     return (
-        <div id="about" className="section border-t space-y-12">
+        <div id="timeline" className="section border-t space-y-12">
             <SectionHeader title={title} description={description} />
             {pinnedResume.map((entry, index) => (
                 <div key={index} className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-x-12">

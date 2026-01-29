@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useLayoutEffect } from "react";
-import { Scene, OrthographicCamera, Mesh, NearestFilter } from "three";
+import React, { useMemo, useLayoutEffect } from "react";
+import { Scene, OrthographicCamera, NearestFilter } from "three";
 import { useFrame, createPortal, useThree } from "@react-three/fiber";
 import { useFBO, Plane } from "@react-three/drei";
 

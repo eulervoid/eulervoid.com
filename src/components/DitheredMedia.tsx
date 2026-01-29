@@ -1,7 +1,7 @@
-import { useRef, useEffect, useState, Suspense } from "react";
+import { useRef, useState } from "react";
 import { useFrame, extend, useThree } from "@react-three/fiber";
 import { shaderMaterial, useTexture, useVideoTexture } from "@react-three/drei";
-import { Vector2, ShaderMaterial, Texture, RepeatWrapping, NearestFilter } from "three";
+import { Vector2, ShaderMaterial, Texture, RepeatWrapping } from "three";
 
 // Shaders and DitherMaterial setup remain identical
 import vertexShader from "~/shaders/DitherMaterial/vertexShader.glsl?raw";

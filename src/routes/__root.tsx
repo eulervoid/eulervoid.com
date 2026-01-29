@@ -6,7 +6,6 @@ import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { Footer } from "~/components/Footer";
 import { Navigation } from "~/components/Navigation";
 import { NotFound } from "~/components/NotFound";
-import { CursorProvider } from "~/components/SimulatedCursor";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 
@@ -21,7 +20,7 @@ export const Route = createRootRoute({
                 content: "width=device-width, initial-scale=1",
             },
             ...seo({
-                title: "Euler Void - A fictional emptiness.",
+                title: "Euler Void — A fictional emptiness.",
                 description: `Hello, I'm Josh, a Software Engineer and creative technologist based in Berlin.`,
             }),
         ],
@@ -44,7 +43,7 @@ export const Route = createRootRoute({
                 sizes: "16x16",
                 href: "/favicon-16x16.png",
             },
-            { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
+            { rel: "manifest", href: "/site.webmanifest", color: "#ffffff" },
             { rel: "icon", href: "/favicon.ico" },
         ],
         scripts: [],
