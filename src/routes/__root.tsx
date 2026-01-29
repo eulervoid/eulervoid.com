@@ -17,7 +17,7 @@ export const Route = createRootRoute({
             },
             {
                 name: "viewport",
-                content: "width=device-width, initial-scale=1",
+                content: "width=360, initial-scale=1",
             },
             ...seo({
                 title: "Euler Void — A fictional emptiness.",

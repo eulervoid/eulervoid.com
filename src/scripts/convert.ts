@@ -48,7 +48,7 @@ async function convertToHls(inputPath: string, outputDir: string) {
         // 1080p stream (Index 0)
         "-map", "0:v",
         ...(hasAudio ? ["-map", "0:a"] : []),
-        "-s:v:0", "1920x1080",
+        "-vf:v:0", "crop=iw:iw*9/16,scale=1920:1080",
         "-b:v:0", "5000k",
         "-maxrate:v:0", "5350k",
         "-bufsize:v:0", "7500k",
@@ -56,7 +56,7 @@ async function convertToHls(inputPath: string, outputDir: string) {
         // 720p stream (Index 1)
         "-map", "0:v",
         ...(hasAudio ? ["-map", "0:a"] : []),
-        "-s:v:1", "1280x720",
+        "-vf:v:1", "crop=iw:iw*9/16,scale=1280:720",
         "-b:v:1", "2800k",
         "-maxrate:v:1", "2996k",
         "-bufsize:v:1", "4200k",
@@ -64,7 +64,7 @@ async function convertToHls(inputPath: string, outputDir: string) {
         // 360p stream (Index 2)
         "-map", "0:v",
         ...(hasAudio ? ["-map", "0:a"] : []),
-        "-s:v:2", "640x360",
+        "-vf:v:2", "crop=iw:iw*9/16,scale=640:360",
         "-b:v:2", "800k",
         "-maxrate:v:2", "856k",
         "-bufsize:v:2", "1200k",

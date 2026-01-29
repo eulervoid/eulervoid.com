@@ -2,6 +2,10 @@
 
 This repository contains the source code for the personal website of eulervoid, built with **TanStack Start** (React), **Vite** and **Tailwind CSS**.
 
+### General Guidelines
+1. Use parallel tools whenever you can.
+2. Be only as verbose as strictly necessary, sacrifice grammar for succinctness.
+
 ## Essential Commands
 
 - `bun run dev`: Start the development server (port 3000)

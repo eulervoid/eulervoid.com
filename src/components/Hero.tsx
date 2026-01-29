@@ -30,12 +30,11 @@ export function Hero() {
     );
 
     return (
-        <div className="relative section flex flex-col justify-center min-h-[90vh] max-h-[680px] items-center md:items-start">
+        <div className="relative section flex flex-col justify-center min-h-[70vh] max-h-[680px] items-center md:items-start">
             <div className="absolute inset-0 w-full h-full">
                 <Suspense>
                     <HeroVideoWebGL
-                        videoUrl="/videos/fungus/master.m3u8"
-                        imageUrl="/images/smileys.jpg"
+                        videoUrl="/videos/hero/master.m3u8"
                         noiseUrl="/images/blue_noise/64_LDR_LLL1_8.png"
                         brightness={1.0}
                         contrast={0.5}

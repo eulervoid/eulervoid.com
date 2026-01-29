@@ -114,7 +114,6 @@ function loadImage(src: string): Promise<HTMLImageElement> {
 
 type HeroVideoWebGLProps = {
     videoUrl: string;
-    imageUrl: string;
     noiseUrl: string;
     brightness?: number;
     contrast?: number;
@@ -215,7 +214,7 @@ export default function HeroVideoWebGL({
             gl.bindTexture(gl.TEXTURE_2D, noiseTexture);
             gl.uniform1i(uBlueNoiseTextureLoc, 1);
 
-            gl.uniform2f(uResolutionLoc, canvas.width, canvas.height);
+            gl.uniform2f(uResolutionLoc, canvas.clientWidth, canvas.clientHeight);
             gl.uniform2f(
                 uTextureResolutionLoc,
                 video.videoWidth || 1920,
