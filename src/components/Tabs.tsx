@@ -36,6 +36,7 @@ function TabBar({ tabs, activeIndex, border, onClick, className }: TabBarProps) 
             <span />
             {tabs.map((tab, index) => (
                 <button
+                    type="button"
                     key={tab.label}
                     onClick={() => onClick(index)}
                     className={twMerge(
@@ -70,6 +71,7 @@ function TabBarMinimal({ tabs, activeIndex, border, onClick, className }: TabBar
             )}
         >
             <button
+                type="button"
                 className="flex flex-1 items-center justify-start px-2.5 py-1 text-xl leading-0"
                 onClick={() => onClick(wrap(activeIndex - 1, tabs.length))}
             >
@@ -77,6 +79,7 @@ function TabBarMinimal({ tabs, activeIndex, border, onClick, className }: TabBar
             </button>
             {tabs.map((tab, index) => (
                 <button
+                    type="button"
                     key={tab.label}
                     onClick={() => onClick(index)}
                     className={twMerge(
@@ -96,6 +99,7 @@ function TabBarMinimal({ tabs, activeIndex, border, onClick, className }: TabBar
                 </button>
             ))}
             <button
+                type="button"
                 className="flex flex-1 items-center justify-end px-2.5 py-1 text-xl leading-0"
                 onClick={() => onClick(wrap(activeIndex + 1, tabs.length))}
             >
@@ -139,11 +143,23 @@ export const Tabs = ({ tabBar = "top", children }: TabsProps) => {
             )}
             <div
                 className={twMerge(
-                    "w-full aspect-video",
+                    "w-full aspect-video relative",
                     tabBarTop ? "row-start-2" : "row-start-1",
                 )}
             >
-                {tabs[activeIndex]?.props?.children}
+                {tabs.map((tab, index) => (
+                    <div
+                        key={tab.props.label}
+                        className={twMerge(
+                            "absolute inset-0",
+                            index === activeIndex
+                                ? "opacity-100 z-10"
+                                : "opacity-0 z-0 pointer-events-none",
+                        )}
+                    >
+                        {tab.props.children}
+                    </div>
+                ))}
             </div>
         </div>
     );

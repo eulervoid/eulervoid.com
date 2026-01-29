@@ -1,30 +1,29 @@
 # Agent Guide: eulervoid.com
 
-This repository contains the source code for the personal website of eulervoid, built with **TanStack Start** (React), **Vite**, **Tailwind CSS**, and **React Three Fiber**.
+This repository contains the source code for the personal website of eulervoid, built with **TanStack Start** (React), **Vite** and **Tailwind CSS**.
 
-## 🚀 Essential Commands
+## Essential Commands
 
-- `bun dev`: Start the development server (port 3000)
-- `bun build`: Build the project for production and run type checks
-- `bun start`: Run the production build locally
+- `bun run dev`: Start the development server (port 3000)
+- `bun run build`: Build the project for production and run type checks
+- `bun run check`: Run typecheck, formatter and linter
 
 > **Note**: The project uses `bun` as the preferred package manager.
 
-## 📁 Code Organization
+## Code Organization
 
 - `src/routes/`: TanStack Router file-based routes.
     - `__root.tsx`: The root layout.
     - `index.tsx`: The home page containing Hero, Work, and Timeline sections.
 - `src/components/`: React components.
-    - `SimulatedCursor/`: A complex cursor simulation system with its own provider, types, and hooks.
 - `src/data/`: Static data for the site (resume, work entries).
 - `src/shaders/`: Custom GLSL shaders.
 - `src/styles/`: global CSS and Tailwind configurations.
 - `src/utils/`: Utility functions and middleware.
-- `public/`: Static assets like images, videos, and fonts.
-- `sprites/`: Aseprite files used for animations/cursors.
+- `public/`: Static public assets
+- `assets/`: Static assets imported via vite, e.g. images that will be optimized on build
 
-## 🛠 Tech Stack & Patterns
+## Tech Stack & Patterns
 
 ### Frameworks
 
@@ -36,24 +35,21 @@ This repository contains the source code for the personal website of eulervoid, 
 ### Key Patterns
 
 - **File-based Routing**: Routes are defined in `src/routes`.
-- **Damping & Motion**: Uses `motion` (formerly framer-motion) for animations.
+- **Damping & Motion**: Use `motion` (formerly framer-motion) for animations.
 - **Data-Driven**: Content for "Work" and "Timeline" is managed in `src/data/*.ts`.
-- **Absolute Imports**: Uses `@src/` alias to refer to the `src/` directory (configured in `tsconfig.json`).
+- **Absolute Imports**: Uses `@src/` and `@assets/` aliases to refer to `src/` and `assets/` (configured in `tsconfig.json`).
 
-## ⚠️ Important Gotchas
+## Important Gotchas
 
-- **Vite Polling**: The dev server is configured with `usePolling: true` in `vite.config.ts` to ensure HMR works across different environments.
-- **R3F + Shaders**: Custom rendering logic often involves `useFBO` and custom shaders (see `src/components/Pixelate.tsx`).
-- **Strict Typing**: The project uses strict TypeScript. Always ensure props and data structures are correctly typed in `types.ts` or inline.
 - **Generated Routes**: `src/routeTree.gen.ts` is automatically managed by TanStack Router. Do not edit it manually.
 
-## 🎨 Styling Conventions
+## Styling Conventions
 
 - Uses Tailwind CSS 4 utility classes.
 - Shared spacing patterns often use custom classes like `section` and `section-px` (defined in `src/styles/`).
 - Mobile-first approach is followed using Tailwind's `md:` and other breakpoints.
 - Pixel-art aesthetic: Often uses `NearestFilter` for textures and custom pixelation shaders.
 
-## 🧪 Testing
+## Testing
 
-There is currently no automated test suite (Jest/Cypress/Playwright) configured in `package.json`. Manual verification of the dev build is recommended for UI changes.
+There are not tests configured.

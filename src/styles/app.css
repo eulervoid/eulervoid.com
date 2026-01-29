@@ -130,8 +130,8 @@ li:last-child {
 @font-face {
     font-family: "Mondwest";
     src:
-        url("/fonts/Mondwest-Regular.woff2") format("woff2"),
-        url("/fonts/Mondwest-Regular.woff") format("woff");
+        url("../../assets/fonts/Mondwest-Regular.woff2") format("woff2"),
+        url("../../assets/fonts/Mondwest-Regular.woff") format("woff");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -140,8 +140,8 @@ li:last-child {
 @font-face {
     font-family: "Departure Mono";
     src:
-        url("/fonts/DepartureMono-Regular.woff2") format("woff2"),
-        url("/fonts/DepartureMono-Regular.woff") format("woff");
+        url("../../assets/fonts/DepartureMono-Regular.woff2") format("woff2"),
+        url("../../assets/fonts/DepartureMono-Regular.woff") format("woff");
     font-weight: 400;
     font-style: normal;
     font-display: swap;

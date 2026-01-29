@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Hls from "hls.js";
 
 const VERTEX_SHADER = `
   attribute vec2 a_position;
@@ -129,6 +130,7 @@ export default function HeroVideoWebGL({
 }: HeroVideoWebGLProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const hlsRef = useRef<Hls | null>(null);
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
@@ -255,11 +257,31 @@ export default function HeroVideoWebGL({
                 video.playsInline = true;
                 video.crossOrigin = "anonymous";
 
+                const canPlayNativeHls = () => {
+                    return video.canPlayType("application/vnd.apple.mpegurl") !== "";
+                };
+
+                const setupHls = () => {
+                    if (Hls.isSupported()) {
+                        const hlsInstance = new Hls({
+                            enableWorker: true,
+                            lowLatencyMode: true,
+                        });
+                        hlsRef.current = hlsInstance;
+                        hlsInstance.loadSource(videoUrl);
+                        hlsInstance.attachMedia(video);
+                        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                            video.play().catch((e) => console.error("Failed to play video:", e));
+                        });
+                    } else if (canPlayNativeHls()) {
+                        video.src = videoUrl;
+                    }
+                };
+
                 video.onloadedmetadata = () => {
                     const rect = canvas.getBoundingClientRect();
                     resize(rect.width, rect.height);
                     setIsReady(true);
-                    video.play().catch((e) => console.error("Failed to play video:", e));
                     render();
                 };
 
@@ -267,8 +289,7 @@ export default function HeroVideoWebGL({
                     console.error("Failed to load video:", e);
                 };
 
-                video.src = videoUrl;
-                video.load();
+                setupHls();
             } catch (err) {
                 console.error("Failed to initialize WebGL:", err);
             }
@@ -297,6 +318,10 @@ export default function HeroVideoWebGL({
                 clearTimeout(resizeTimeout);
             }
             resizeObserver.disconnect();
+            if (hlsRef.current) {
+                hlsRef.current.destroy();
+                hlsRef.current = null;
+            }
             if (gl) {
                 gl.deleteProgram(program);
                 gl.deleteShader(vertexShader);

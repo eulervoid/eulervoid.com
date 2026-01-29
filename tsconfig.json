@@ -1,5 +1,6 @@
 {
     "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["public/videos"],
     "compilerOptions": {
         "strict": true,
         "esModuleInterop": true,

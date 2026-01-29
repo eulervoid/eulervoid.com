@@ -1,20 +1,19 @@
 import { dedent } from "@src/util";
-import type { ImageSource } from "@src/components/ResponsiveImage";
 
-import nylon01 from "@assets/images/work/wave-casual/nylon-01.png?responsive";
-import nylon02 from "@assets/images/work/wave-casual/nylon-02.png?responsive";
-import nylon03 from "@assets/images/work/wave-casual/nylon-03.png?responsive";
+import nylon01 from "@assets/images/work/wave-casual/nylon-01.png?responsive-rgb";
+import nylon02 from "@assets/images/work/wave-casual/nylon-02.png?responsive-rgb";
+import nylon03 from "@assets/images/work/wave-casual/nylon-03.png?responsive-rgb";
 
-import vclub01 from "@assets/images/work/virtual-club/vclub-01.png?responsive";
-import vclub02 from "@assets/images/work/virtual-club/vclub-02.png?responsive";
-import vclub03 from "@assets/images/work/virtual-club/vclub-outdoor-01.png?responsive";
+import vclub01 from "@assets/images/work/virtual-club/vclub-01.png?responsive-rgb";
+import vclub02 from "@assets/images/work/virtual-club/vclub-02.png?responsive-rgb";
+import vclub03 from "@assets/images/work/virtual-club/vclub-outdoor-01.png?responsive-rgb";
 
-import futur0101 from "@assets/images/work/futur01/futur01-01.jpg?responsive";
-import futur0102 from "@assets/images/work/futur01/futur01-02.jpg?responsive";
-import futur0103 from "@assets/images/work/futur01/futur01-03.jpg?responsive";
+import futur0101 from "@assets/images/work/futur01/futur01-01.jpg?responsive-rgb";
+import futur0102 from "@assets/images/work/futur01/futur01-02.jpg?responsive-rgb";
+import futur0103 from "@assets/images/work/futur01/futur01-03.jpg?responsive-rgb";
 
-import ccc37 from "@assets/images/work/ccc/37c3-title.png?responsive";
-import ccc38 from "@assets/images/work/ccc/38c3-title.png?responsive";
+import ccc37 from "@assets/images/work/ccc/37c3-title.png?responsive-rgb";
+import ccc38 from "@assets/images/work/ccc/38c3-title.png?responsive-rgb";
 
 export type Media = {
     type: "image" | "video";

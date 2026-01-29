@@ -34,7 +34,7 @@ export function Hero() {
             <div className="absolute inset-0 w-full h-full">
                 <Suspense>
                     <HeroVideoWebGL
-                        videoUrl="/videos/sand.mp4"
+                        videoUrl="/videos/fungus/master.m3u8"
                         imageUrl="/images/smileys.jpg"
                         noiseUrl="/images/blue_noise/64_LDR_LLL1_8.png"
                         brightness={1.0}

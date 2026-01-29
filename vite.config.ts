@@ -4,8 +4,9 @@ import tsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
 import { imagetools } from "vite-imagetools";
-import { existsSync } from "fs";
-import { resolve } from "path";
+import { copyFileSync, existsSync } from "node:fs";
+import { resolve, join, basename } from "node:path";
+import { URLSearchParams } from "url";
 
 function requireFiles(files: string[]): Plugin {
     return {
@@ -21,6 +22,23 @@ function requireFiles(files: string[]): Plugin {
     };
 }
 
+function copyFiles(options: { files: string[] }): Plugin {
+    return {
+        name: "copy-files",
+        closeBundle() {
+            const targets = ["dist/client/assets"];
+            for (const fileSrc of options.files) {
+                const filename = basename(fileSrc);
+                for (const targetDir of targets) {
+                    const fileDest = join(targetDir, filename);
+                    copyFileSync(fileSrc, fileDest);
+                    console.log(`Copied ${fileSrc} to ${fileDest}`);
+                }
+            }
+        },
+    };
+}
+
 export default defineConfig({
     server: {
         port: 3000,
@@ -28,11 +46,34 @@ export default defineConfig({
     plugins: [
         // Make sure paid fonts are present
         requireFiles([
-            "public/fonts/Mondwest-Regular.woff",
-            "public/fonts/Mondwest-Regular.woff2",
-            "public/fonts/DepartureMono-Regular.woff",
-            "public/fonts/DepartureMono-Regular.woff2",
+            "assets/fonts/Mondwest-Regular.woff",
+            "assets/fonts/Mondwest-Regular.woff2",
+            "assets/fonts/DepartureMono-Regular.woff",
+            "assets/fonts/DepartureMono-Regular.woff2",
         ]),
+        imagetools({
+            defaultDirectives: (url) => {
+                if (url.searchParams.has("responsive-rgb")) {
+                    return new URLSearchParams({
+                        format: "webp;jpg",
+                        webp: "85",
+                        jpg: "80",
+                        w: "400;800;1200",
+                        as: "srcset",
+                    });
+                }
+                if (url.searchParams.has("responsive-rgba")) {
+                    return new URLSearchParams({
+                        format: "webp;png",
+                        webp: "85",
+                        png: "6",
+                        w: "400;800;1200",
+                        as: "srcset",
+                    });
+                }
+                return new URLSearchParams();
+            },
+        }),
         tsConfigPaths({
             projects: ["./tsconfig.json"],
         }),
@@ -48,17 +89,9 @@ export default defineConfig({
         }),
         tailwindcss(),
         viteReact(),
-        imagetools({
-            defaultDirectives: (url) => {
-                if (url.searchParams.has('responsive')) {
-                    return new URLSearchParams({
-                        format: 'webp;jpg;png',
-                        w: '400;800;1200',
-                        as: 'srcset',
-                    });
-                }
-                return new URLSearchParams();
-            },
+        // Copy .htaccess to assets for font protection
+        copyFiles({
+            files: ["assets/fonts/.htaccess"],
         }),
     ],
 });
