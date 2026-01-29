@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Typewriter, Script, chain, deleteText, writeText, pause } from "./Typewriter";
 import { WindowTopbar } from "./Window";
+import { twMerge } from "tailwind-merge";
 
 const HeroVideoWebGL = lazy(() => import("./HeroVideoWebGL"));
 
@@ -30,7 +31,13 @@ export function Hero() {
     );
 
     return (
-        <div className="relative section flex flex-col justify-center min-h-[70vh] max-h-[680px] items-center md:items-start">
+        <div
+            className={twMerge(
+                "relative section",
+                "flex flex-col justify-center items-center md:items-start",
+                "min-h-[min(70vh,600px)]",
+            )}
+        >
             <div className="absolute inset-0 w-full h-full">
                 <Suspense>
                     <HeroVideoWebGL

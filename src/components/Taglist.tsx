@@ -11,12 +11,12 @@ export function Taglist({ title, tags, className }: TaglistProps) {
     return (
         <div className={twMerge("flex flex-col text-xs leading-normal text-gray-500", className)}>
             <span className="text-white mb-1">{title.toUpperCase()}</span>
-            {tags.map((tag) => {
+            {tags.map((tag, index) => {
                 if (typeof tag === "string") {
-                    return <span>{tag}</span>;
+                    return <span key={index}>{tag}</span>;
                 } else {
                     return (
-                        <a href={tag.href} className="hover:text-lime-300">
+                        <a key={index} href={tag.href} className="hover:text-lime-300">
                             {tag.label}
                         </a>
                     );
