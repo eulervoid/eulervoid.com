@@ -10,15 +10,16 @@ dist
 .output
 .nitro
 .claude
+.crush
+.tanstack
+.env.sentry-build-plugin
 /build/
 /api/
 /server/build
-/public/build# Sentry Config File
-.env.sentry-build-plugin
+/public/build
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-.tanstack
 /public/fonts/Mondwest*
-/public/videos
+/assets/videos

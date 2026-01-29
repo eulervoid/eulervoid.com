@@ -1,7 +1,7 @@
-import { WorkEntry } from "~/data/work";
+import { WorkEntry } from "@src/data/work";
 import { Taglist } from "./Taglist";
 import ReactMarkdown from "react-markdown";
-import { formatDateRange } from "~/util";
+import { formatDateRange } from "@src/util";
 
 type WorkDetailsProps = {
     entry: WorkEntry;

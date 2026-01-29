@@ -1,5 +1,5 @@
 import { spawn } from "bun";
-import { lines } from "~/util";
+import { lines } from "@src/util";
 import { mkdirSync, existsSync } from "node:fs";
 
 async function convertToHls(inputPath: string, outputDir: string) {

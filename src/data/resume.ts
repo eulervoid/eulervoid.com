@@ -1,4 +1,4 @@
-import { dedent } from "~/util";
+import { dedent } from "@src/util";
 
 export interface ResumeLink {
     url: string;

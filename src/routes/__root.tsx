@@ -2,12 +2,12 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
-import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
-import { Footer } from "~/components/Footer";
-import { Navigation } from "~/components/Navigation";
-import { NotFound } from "~/components/NotFound";
-import appCss from "~/styles/app.css?url";
-import { seo } from "~/utils/seo";
+import { DefaultCatchBoundary } from "@src/components/DefaultCatchBoundary";
+import { Footer } from "@src/components/Footer";
+import { Navigation } from "@src/components/Navigation";
+import { NotFound } from "@src/components/NotFound";
+import appCss from "@src/styles/app.css?url";
+import { seo } from "@src/utils/seo";
 
 export const Route = createRootRoute({
     head: () => ({

@@ -3,6 +3,7 @@ import { defineConfig, Plugin } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
+import { imagetools } from "vite-imagetools";
 import { existsSync } from "fs";
 import { resolve } from "path";
 
@@ -47,5 +48,17 @@ export default defineConfig({
         }),
         tailwindcss(),
         viteReact(),
+        imagetools({
+            defaultDirectives: (url) => {
+                if (url.searchParams.has('responsive')) {
+                    return new URLSearchParams({
+                        format: 'webp;jpg;png',
+                        w: '400;800;1200',
+                        as: 'srcset',
+                    });
+                }
+                return new URLSearchParams();
+            },
+        }),
     ],
 });

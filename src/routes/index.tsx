@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Timeline } from "~/components/Timeline";
-import { Hero } from "~/components/Hero";
-import { Work } from "~/components/Work";
-import { work } from "~/data/work";
+import { Timeline } from "@src/components/Timeline";
+import { Hero } from "@src/components/Hero";
+import { Work } from "@src/components/Work";
+import { work } from "@src/data/work";
 
 async function preloadImage(src: string) {
     return new Promise((resolve, reject) => {
@@ -23,8 +23,8 @@ export const Route = createFileRoute("/")({
 
         const workImages = work
             .flatMap((entry) => entry.media)
-            .filter((media) => media.type === "image")
-            .map((media) => media.url);
+            .filter((media) => media.type === "image" && media.url)
+            .map((media) => media.url!);
 
         workImages.forEach((url) => preloadImage(url));
     },

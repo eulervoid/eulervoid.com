@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { Link } from "~/data/work";
+import { Link } from "@src/data/work";
 
 type TaglistProps = {
     title: string;

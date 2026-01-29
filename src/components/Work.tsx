@@ -1,7 +1,7 @@
 import { Desktop } from "./Desktop";
 import { useRef } from "react";
 import { SectionHeader } from "./SectionHeader";
-import { type WorkEntry } from "~/data/work";
+import { type WorkEntry } from "@src/data/work";
 
 type WorkProps = {
     entries: WorkEntry[];

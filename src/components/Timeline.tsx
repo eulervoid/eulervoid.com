@@ -1,7 +1,7 @@
-import { pinnedResume } from "~/data/resume";
+import { pinnedResume } from "@src/data/resume";
 import ReactMarkdown from "react-markdown";
 import { SectionHeader } from "./SectionHeader";
-import { dedent, formatDateRange } from "~/util";
+import { dedent, formatDateRange } from "@src/util";
 import { twMerge } from "tailwind-merge";
 
 export function Timeline() {

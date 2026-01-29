@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { address } from "~/data/shared";
+import { address } from "@src/data/shared";
 
 export const Route = createFileRoute("/imprint")({
     component: RouteComponent,

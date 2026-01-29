@@ -4,8 +4,8 @@ import { shaderMaterial, useTexture, useVideoTexture } from "@react-three/drei";
 import { Vector2, ShaderMaterial, Texture, RepeatWrapping } from "three";
 
 // Shaders and DitherMaterial setup remain identical
-import vertexShader from "~/shaders/DitherMaterial/vertexShader.glsl?raw";
-import fragmentShader from "~/shaders/DitherMaterial/fragmentShader.glsl?raw";
+import vertexShader from "@src/shaders/DitherMaterial/vertexShader.glsl?raw";
+import fragmentShader from "@src/shaders/DitherMaterial/fragmentShader.glsl?raw";
 
 type DitherMaterialUniforms = {
     uTexture: Texture | null;

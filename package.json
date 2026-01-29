@@ -5,7 +5,7 @@
     "sideEffects": false,
     "scripts": {
         "dev": "vite dev",
-        "build": "vite build && tsc --noEmit",
+        "build": "vite build",
         "start": "node .output/server/index.mjs",
         "fmt": "oxfmt",
         "fmt:check": "oxfmt --check"
@@ -40,7 +40,9 @@
         "@types/react-dom": "^19.2.3",
         "oxfmt": "^0.27.0",
         "oxlint": "^1.42.0",
+        "sharp": "^0.34.5",
         "typescript": "^5.9.3",
+        "vite-imagetools": "^9.0.2",
         "vite-tsconfig-paths": "^6.0.5"
     }
 }

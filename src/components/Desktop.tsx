@@ -1,8 +1,8 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
-import { Window, WindowHandle } from "~/components/Window";
+import { Window, WindowHandle } from "@src/components/Window";
+import { WorkDetails } from "@src/components/WorkDetails";
 import { Tab, Tabs } from "./Tabs";
-import { type WorkEntry } from "~/data/work";
-import { WorkDetails } from "./WorkDetails";
+import { type WorkEntry } from "@src/data/work";
 
 type AnimatedValue = number | [number, number, number];
 
@@ -333,11 +333,26 @@ export function Desktop({ entries }: DesktopProps) {
                 >
                     <Tabs tabBar="bottom">
                         {entries[windowIndex].media.map((media, mediaIndex) => (
-                            <Tab key={media.url} label={media.label || `image-${mediaIndex}.png`}>
-                                <img
-                                    src={media.url}
-                                    className="w-full h-full object-cover object-center"
-                                />
+                            <Tab
+                                key={media.label || `image-${mediaIndex}`}
+                                label={media.label || `image-${mediaIndex}.png`}
+                            >
+                                {media.srcSet ? (
+                                    <img
+                                        srcSet={media.srcSet}
+                                        alt={media.description || ""}
+                                        className="w-full h-full object-cover object-center"
+                                        sizes="(max-width: 768px) 100vw, 700px"
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <img
+                                        src={media.url}
+                                        alt={media.description || ""}
+                                        className="w-full h-full object-cover object-center"
+                                        loading="lazy"
+                                    />
+                                )}
                             </Tab>
                         ))}
                     </Tabs>

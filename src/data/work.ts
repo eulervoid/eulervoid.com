@@ -1,8 +1,25 @@
-import { dedent } from "~/util";
+import { dedent } from "@src/util";
+import type { ImageSource } from "@src/components/ResponsiveImage";
+
+import nylon01 from "@assets/images/work/wave-casual/nylon-01.png?responsive";
+import nylon02 from "@assets/images/work/wave-casual/nylon-02.png?responsive";
+import nylon03 from "@assets/images/work/wave-casual/nylon-03.png?responsive";
+
+import vclub01 from "@assets/images/work/virtual-club/vclub-01.png?responsive";
+import vclub02 from "@assets/images/work/virtual-club/vclub-02.png?responsive";
+import vclub03 from "@assets/images/work/virtual-club/vclub-outdoor-01.png?responsive";
+
+import futur0101 from "@assets/images/work/futur01/futur01-01.jpg?responsive";
+import futur0102 from "@assets/images/work/futur01/futur01-02.jpg?responsive";
+import futur0103 from "@assets/images/work/futur01/futur01-03.jpg?responsive";
+
+import ccc37 from "@assets/images/work/ccc/37c3-title.png?responsive";
+import ccc38 from "@assets/images/work/ccc/38c3-title.png?responsive";
 
 export type Media = {
     type: "image" | "video";
-    url: string;
+    url?: string;
+    srcSet?: string;
     description: string;
     label?: string;
 };
@@ -44,19 +61,19 @@ const entries: WorkEntry[] = [
         media: [
             {
                 type: "image",
-                url: "/images/work/wave-casual/nylon-01.png",
+                srcSet: nylon01,
                 description: "",
                 label: "nylon-01.png",
             },
             {
                 type: "image",
-                url: "/images/work/wave-casual/nylon-02.png",
+                srcSet: nylon02,
                 description: "",
                 label: "nylon-02.png",
             },
             {
                 type: "image",
-                url: "/images/work/wave-casual/nylon-03.png",
+                srcSet: nylon03,
                 description: "",
                 label: "nylon-03.png",
             },
@@ -87,19 +104,19 @@ const entries: WorkEntry[] = [
         media: [
             {
                 type: "image",
-                url: "/images/work/virtual-club/vclub-02.png",
+                srcSet: vclub01,
                 description: "Virtual Club Screenshot",
                 label: "vclub-01.png",
             },
             {
                 type: "image",
-                url: "/images/work/virtual-club/vclub-01.png",
+                srcSet: vclub02,
                 description: "Virtual Club Screenshot",
                 label: "vclub-02.png",
             },
             {
                 type: "image",
-                url: "/images/work/virtual-club/vclub-outdoor-01.png",
+                srcSet: vclub03,
                 description: "Virtual Club Screenshot",
                 label: "vclub-03.png",
             },
@@ -128,19 +145,19 @@ const entries: WorkEntry[] = [
         media: [
             {
                 type: "image",
-                url: "/images/work/futur01/futur01-01.jpg",
+                srcSet: futur0101,
                 description: "Futur01 Screenshot 1",
                 label: "futur-01.jpg",
             },
             {
                 type: "image",
-                url: "/images/work/futur01/futur01-02.jpg",
+                srcSet: futur0102,
                 description: "Futur01 Screenshot 2",
                 label: "futur-02.jpg",
             },
             {
                 type: "image",
-                url: "/images/work/futur01/futur01-03.jpg",
+                srcSet: futur0103,
                 description: "Futur01 Screenshot 3",
                 label: "futur-03.jpg",
             },
@@ -170,15 +187,15 @@ const entries: WorkEntry[] = [
         media: [
             {
                 type: "image",
-                url: "/images/work/ccc/38c3-title.png",
-                description: "38C3 Title Screen",
-                label: "38c3-title.png",
+                srcSet: ccc37,
+                description: "37C3 Title Screen",
+                label: "37c3-title.png",
             },
             {
                 type: "image",
-                url: "/images/work/ccc/37c3-title.png",
-                description: "37C3 Title Screen",
-                label: "37c3-title.png",
+                srcSet: ccc38,
+                description: "38C3 Title Screen",
+                label: "38c3-title.png",
             },
         ],
         categories: ["Design", "Development"],

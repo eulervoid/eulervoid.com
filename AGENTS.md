@@ -38,7 +38,7 @@ This repository contains the source code for the personal website of eulervoid, 
 - **File-based Routing**: Routes are defined in `src/routes`.
 - **Damping & Motion**: Uses `motion` (formerly framer-motion) for animations.
 - **Data-Driven**: Content for "Work" and "Timeline" is managed in `src/data/*.ts`.
-- **Absolute Imports**: Uses `~/` alias to refer to the `src/` directory (configured in `tsconfig.json`).
+- **Absolute Imports**: Uses `@src/` alias to refer to the `src/` directory (configured in `tsconfig.json`).
 
 ## ⚠️ Important Gotchas
 

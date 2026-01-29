@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { address } from "~/data/shared";
+import { address } from "@src/data/shared";
 
 export const Route = createFileRoute("/privacy")({
     component: Privacy,

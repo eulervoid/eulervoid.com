@@ -1,6 +1,6 @@
 import { useState, ReactNode, ReactElement, Children, isValidElement } from "react";
 import { twMerge } from "tailwind-merge";
-import { wrap } from "~/util";
+import { wrap } from "@src/util";
 
 interface TabProps {
     label: string;

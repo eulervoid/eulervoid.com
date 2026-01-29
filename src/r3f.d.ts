@@ -1,4 +1,4 @@
-import { DitherMaterialType } from "~/components/DitheredMedia";
+import { DitherMaterialType } from "@src/components/DitheredMedia";
 import { MaterialNode } from "@react-three/fiber";
 
 declare module "@react-three/fiber" {
