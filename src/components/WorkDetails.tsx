@@ -10,9 +10,9 @@ type WorkDetailsProps = {
 export function WorkDetails({ entry }: WorkDetailsProps) {
     return (
         <div className="flex flex-col gap-12 px-5 py-5">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
                 <h3>{entry.title}</h3>
-                <div className="text-sm leading-nromal text-gray-500 mb-3">
+                <div className="text-sm text-gray-500 mb-3">
                     {entry.client}
                     <br />
                     {formatDateRange(entry.begin, entry.end)}

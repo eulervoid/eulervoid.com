@@ -43,8 +43,8 @@ export function Hero() {
                     <HeroVideoWebGL
                         videoUrl="/videos/hero/master.m3u8"
                         noiseUrl="/images/blue_noise/64_LDR_LLL1_8.png"
-                        brightness={1.0}
-                        contrast={0.5}
+                        brightness={1.8}
+                        contrast={0.8}
                     />
                 </Suspense>
             </div>

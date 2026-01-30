@@ -51,9 +51,13 @@ const entries: WorkEntry[] = [
     {
         title: "Nylon",
         description: dedent`
-			At Wave Casual we built Nylon, a new kind of software sythesizer 
-			that generates sounds from geometric shapes. 
-		`,
+            At Wave Casual we built Nylon, a new kind of software sythesizer 
+            that generates sounds from geometric shapes. 
+            
+            It features two geometric oscillators which generate sound from cyclic bezier
+            curves. The shape of these curves can be modulated via envelopes and LFOs to
+            build rich and dynamic sounds in an intuitive way.
+        `,
         client: "Wave Casual UG",
         begin: "2016-10-01",
         end: "2021-02-01",
@@ -61,19 +65,19 @@ const entries: WorkEntry[] = [
             {
                 type: "image",
                 srcSet: nylon01,
-                description: "",
+                description: "Nylon Screenshot",
                 label: "nylon-01.png",
             },
             {
                 type: "image",
                 srcSet: nylon02,
-                description: "",
+                description: "Nylon Screenshot",
                 label: "nylon-02.png",
             },
             {
                 type: "image",
                 srcSet: nylon03,
-                description: "",
+                description: "Nylon Screenshot",
                 label: "nylon-03.png",
             },
         ],
@@ -85,18 +89,21 @@ const entries: WorkEntry[] = [
         },
         links: [
             {
-                label: "Applaus Price Video",
-                href: "https://www.youtube.com/watch?v=oKXnjmGDuNo",
+                label: "Nylon Introduction Video",
+                href: "https://www.youtube.com/watch?v=zHkuSWSdI94",
             },
         ],
     },
     {
         title: "Virtual Club",
         description: dedent`
-			The Virtual Club was a digital recreation of objekt klein a, where 
-			users would fly around as smiley avatars, listen to DJ sets, talk to
-			each other and look at digital exhibitions.
-		`,
+            The Virtual Club was a digital recreation of objekt klein a, where 
+            users would fly around as smiley avatars, listen to DJ sets, talk to
+            each other and look at digital exhibitions.
+
+            During the Covid19 lockdowns, we hosted 14 virtual events with a diverse
+            mix of DJs and Artists and got awarded the *Applaus Award for Innovation* in 2022.
+        `,
         client: "objekt klein a e.V.",
         begin: "2020-12-01",
         end: "2022-12-01",
@@ -136,11 +143,12 @@ const entries: WorkEntry[] = [
     {
         title: "Futur01",
         description: dedent`
-			A virtual exhibition, 3D web experience. 
-		`,
+            A virtual exhibition and 3D web experience accompanying a 
+            space-filling installation at Hole of Fame, Dresden, by Alba Álvarez.
+        `,
         client: "Alba Álvarez",
         begin: "2021-09-01",
-        end: "2021-12-31",
+        end: "2021-12-15",
         media: [
             {
                 type: "image",
@@ -172,14 +180,19 @@ const entries: WorkEntry[] = [
                 label: "futur01.com",
                 href: "https://www.futur01.com",
             },
+            {
+                label: "Project Info",
+                href: "https://www.albatata.com/project/futur_01_,-2022",
+            },
         ],
     },
     {
         title: "Chaos Communication Congress",
         description: dedent`
-			In 2023 and 2024 I had the honor to design the visual identity of the 
-			annual Chaos Communication Congress in Hamburg, Germany, together with Luis Masalliera ([@robokid](https://robokid.com)). 
-		`,
+            In 2023 and 2024 I had the honor to design the visual identity of the 
+            annual Chaos Communication Congress in Hamburg, Germany, 
+            together with Luis Masalliera ([@robokid](https://instagram.com/robokid)). 
+        `,
         client: "Chaos Computer Club",
         begin: "2023-06",
         end: "2024-06",
