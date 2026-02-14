@@ -35,7 +35,7 @@ export function Navigation() {
                         className: "font-bold",
                     }}
                     activeOptions={{ exact: true }}
-                    className="text-black bg-white px-3 py-1 hover:bg-lime-300"
+                    className="text-black bg-white px-3 py-1 hover:bg-lime-300 hover:text-black!"
                 >
                     Contact
                 </Link>

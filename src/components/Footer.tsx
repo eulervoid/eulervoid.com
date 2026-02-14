@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { twMerge } from "tailwind-merge";
 
 const linkClass = "transition-colors duration-100 hover:text-lime-300";
 
@@ -13,7 +14,10 @@ export function Footer() {
                 </p>
                 <a
                     href="mailto:josh@eulervoid.com"
-                    className="text-black bg-white self-start px-4 py-2 ligatures mt-7 transition-colors duration-100 hover:bg-lime-300"
+                    className={twMerge(
+                        "text-black bg-white self-start px-4 py-2 ligatures mt-7",
+                        "transition-colors duration-100 hover:bg-lime-300  hover:text-black!",
+                    )}
                 >
                     josh@eulervoid.com
                 </a>
