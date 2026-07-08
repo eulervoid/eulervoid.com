@@ -1,6 +1,5 @@
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { defineConfig, Plugin } from "vite";
-import tsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
 import { imagetools } from "vite-imagetools";
@@ -43,6 +42,9 @@ export default defineConfig({
     server: {
         port: 3000,
     },
+    resolve: {
+        tsconfigPaths: true,
+    },
     plugins: [
         // Make sure paid fonts are present
         requireFiles([
@@ -73,9 +75,6 @@ export default defineConfig({
                 }
                 return new URLSearchParams();
             },
-        }),
-        tsConfigPaths({
-            projects: ["./tsconfig.json"],
         }),
         tanstackStart({
             prerender: {
