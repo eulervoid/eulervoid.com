@@ -123,11 +123,11 @@
 }
 
 @utility section-px {
-    @apply px-4 sm:px-8 md:px-16 lg:px-[120px];
+    @apply px-4 sm:px-8 md:px-16 lg:px-30;
 }
 
 @utility section-py {
-    @apply px-12 py-24 lg:px-[120px] scroll-mt-20;
+    @apply px-12 py-24 lg:px-30 scroll-mt-20;
 }
 
 @font-face {
