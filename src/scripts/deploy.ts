@@ -1,9 +1,9 @@
-import { spawn } from "bun";
+import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 
 async function deploy() {
     if (!existsSync("./dist")) {
-        console.error("No dist folder found. Please run `bun run build` first.");
+        console.error("No dist folder found. Please run `deno task build` first.");
         process.exit(1);
     }
 
@@ -17,9 +17,8 @@ async function deploy() {
         "eulerweb:/public_html",
     ];
 
-    const proc = spawn(rcloneCmd, {
-        stdout: "inherit",
-        stderr: "inherit",
+    const proc = spawn(rcloneCmd[0], rcloneCmd.slice(1), {
+        stdio: "inherit",
         env: {
             ...process.env,
             RCLONE_CONFIG_EULERWEB_TYPE: "sftp",
@@ -29,7 +28,10 @@ async function deploy() {
         },
     });
 
-    const exitCode = await proc.exited;
+    const exitCode = await new Promise<number>((resolve, reject) => {
+        proc.once("error", reject);
+        proc.once("close", (code) => resolve(code ?? 1));
+    });
 
     if (exitCode === 0) {
         console.log("\nDeployment complete!");

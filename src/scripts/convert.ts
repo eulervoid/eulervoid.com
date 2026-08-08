@@ -1,18 +1,19 @@
-import { spawn } from "bun";
+import { execFile, spawn } from "node:child_process";
+import { promisify } from "node:util";
 import { lines } from "@src/util";
 import { mkdirSync, existsSync } from "node:fs";
 
+const execFileAsync = promisify(execFile);
+
 async function detectAudio(inputPath: string): Promise<boolean> {
-    const proc = spawn({
-        cmd: ["ffprobe", "-show_streams", "-select_streams", "a", inputPath],
-        stdout: "pipe",
-        stderr: "pipe",
-    });
+    const { stdout } = await execFileAsync("ffprobe", [
+        "-show_streams",
+        "-select_streams",
+        "a",
+        inputPath,
+    ]);
 
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-
-    return output.includes("Stream #");
+    return stdout.includes("Stream #");
 }
 
 async function convertToHls(inputPath: string, outputDir: string) {
@@ -80,12 +81,14 @@ async function convertToHls(inputPath: string, outputDir: string) {
         `${outputDir}/stream_%v.m3u8`,
     ];
 
-    const proc = spawn(ffmpegArgs, {
-        stdout: "inherit",
-        stderr: "inherit",
+    const proc = spawn(ffmpegArgs[0], ffmpegArgs.slice(1), {
+        stdio: "inherit",
     });
 
-    const exitCode = await proc.exited;
+    const exitCode = await new Promise<number>((resolve, reject) => {
+        proc.once("error", reject);
+        proc.once("close", (code) => resolve(code ?? 1));
+    });
 
     if (exitCode === 0) {
         console.log("\nConversion successful!");
@@ -95,11 +98,13 @@ async function convertToHls(inputPath: string, outputDir: string) {
     }
 }
 
-const input = Bun.argv[2];
-const output = Bun.argv[3] || "output_hls";
+const input = process.argv[2];
+const output = process.argv[3] || "output_hls";
 
 if (!input) {
-    console.error("Usage: bun run convert.ts <input_video> [output_directory]");
+    console.error(
+        "Usage: deno run --allow-read --allow-write --allow-run=ffmpeg,ffprobe src/scripts/convert.ts <input_video> [output_directory]",
+    );
     process.exit(1);
 }
 

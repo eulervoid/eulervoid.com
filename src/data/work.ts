@@ -45,6 +45,7 @@ export type TechnologyEntry = {
     languages?: string[];
     libraries?: string[];
     software?: string[];
+    services?: string[];
 };
 
 const entries: WorkEntry[] = [
@@ -214,7 +215,7 @@ const entries: WorkEntry[] = [
         technology: {
             languages: ["Rust", "Python"],
             libraries: ["bpy", "ffmpeg"],
-            software: ["Blender", "Figma", "Affinity Designer"],
+            software: ["Blender", "Figma", "Affinity"],
         },
         links: [
             {

@@ -9,7 +9,17 @@
     --section-padding-inline: 12rem;
 }
 
+@media print {
+    :root {
+        --text-base: 8pt;
+    }
+    * {
+        @apply border-none;
+    }
+}
+
 @layer base {
+
     html {
         color-scheme: dark;
     }
@@ -115,7 +125,6 @@
     .ligatures {
         font-variant-ligatures: discretionary-ligatures;
     }
-
 
     .section {
         @apply section-px section-py;

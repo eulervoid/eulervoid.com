@@ -5,7 +5,7 @@ import viteReact from "@vitejs/plugin-react";
 import { imagetools } from "vite-imagetools";
 import { copyFileSync, existsSync } from "node:fs";
 import { resolve, join, basename } from "node:path";
-import { URLSearchParams } from "url";
+import { URLSearchParams } from "node:url";
 
 function requireFiles(files: string[]): Plugin {
     return {

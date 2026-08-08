@@ -5,7 +5,7 @@ const linkClass = "transition-colors duration-100 hover:text-lime-300";
 
 export function Footer() {
     return (
-        <div id="footer" className="section flex flex-col gap-18 border-t">
+        <div id="footer" className="section flex flex-col gap-18 border-t print:invisible">
             <div className="flex flex-col gap-2 max-w-100">
                 <h2>Let's talk!</h2>
                 <p>

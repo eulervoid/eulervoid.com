@@ -6,13 +6,13 @@
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
-        "start": "bun .output/server/index.mjs",
+        "start": "deno run -A .output/server/index.mjs",
         "fmt": "oxfmt",
         "fmt:check": "oxfmt --check",
         "lint": "oxlint",
         "typecheck": "tsc --noEmit",
-        "check": "bun run typecheck && bun run fmt:check && bun run lint",
-        "deploy": "bun run build && bun src/scripts/deploy.ts"
+        "check": "deno task typecheck && deno task fmt:check && deno task lint",
+        "deploy": "deno task build && deno run --allow-read=dist --allow-env --allow-run=op src/scripts/deploy.ts"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.3.2",
@@ -36,7 +36,6 @@
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.20",
-        "@types/bun": "^1.3.14",
         "@types/node": "^26.1.1",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
@@ -44,7 +43,7 @@
         "oxfmt": "^0.58.0",
         "oxlint": "^1.73.0",
         "sharp": "^0.35.3",
-        "typescript": "^6.0.3",
+        "typescript": "^7.0.2",
         "vite-imagetools": "^10.0.1"
     }
 }

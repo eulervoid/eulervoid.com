@@ -10,7 +10,7 @@ type TaglistProps = {
 export function Taglist({ title, tags, className }: TaglistProps) {
     return (
         <div className={twMerge("flex flex-col text-xs leading-normal text-gray-500", className)}>
-            <span className="text-white mb-1">{title.toUpperCase()}</span>
+            <span className="text-gray-400 mb-1">{title.toUpperCase()}</span>
             {tags.map((tag, index) => {
                 if (typeof tag === "string") {
                     return <span key={index}>{tag}</span>;
