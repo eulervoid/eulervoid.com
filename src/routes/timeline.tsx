@@ -12,7 +12,7 @@ export const Route = createFileRoute("/timeline")({
 function Timeline() {
     return (
         <div className="relative">
-            <TimelineComponent showAll />
+            <TimelineComponent showAll showTechnology chonological />
         </div>
     );
 }

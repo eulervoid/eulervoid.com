@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 
 async function deploy() {
     if (!existsSync("./dist")) {
-        console.error("No dist folder found. Please run `deno task build` first.");
+        console.error("No dist folder found. Please run `npm run build` first.");
         process.exit(1);
     }
 

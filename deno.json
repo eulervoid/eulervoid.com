@@ -1,7 +1,0 @@
-{
-    "nodeModulesDir": "manual",
-    "preferPackageJson": true,
-    "imports": {
-        "@src/util": "./src/util.ts"
-    }
-}
