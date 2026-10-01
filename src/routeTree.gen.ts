@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ImprintRouteImport } from './routes/imprint'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TimelineRouteImport } from './routes/timeline'
+import { Route as DataResumeRouteImport } from './routes/data/resume'
+import { Route as DataWorkRouteImport } from './routes/data/work'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +36,32 @@ const TimelineRoute = TimelineRouteImport.update({
   path: '/timeline',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DataResumeRoute = DataResumeRouteImport.update({
+  id: '/data/resume',
+  path: '/data/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataWorkRoute = DataWorkRouteImport.update({
+  id: '/data/work',
+  path: '/data/work',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
   '/privacy': typeof PrivacyRoute
   '/timeline': typeof TimelineRoute
+  '/data/resume': typeof DataResumeRoute
+  '/data/work': typeof DataWorkRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
   '/privacy': typeof PrivacyRoute
   '/timeline': typeof TimelineRoute
+  '/data/resume': typeof DataResumeRoute
+  '/data/work': typeof DataWorkRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +69,24 @@ export interface FileRoutesById {
   '/imprint': typeof ImprintRoute
   '/privacy': typeof PrivacyRoute
   '/timeline': typeof TimelineRoute
+  '/data/resume': typeof DataResumeRoute
+  '/data/work': typeof DataWorkRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/imprint' | '/privacy' | '/timeline'
+  fullPaths:
+    '/' | '/imprint' | '/privacy' | '/timeline' | '/data/resume' | '/data/work'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/imprint' | '/privacy' | '/timeline'
-  id: '__root__' | '/' | '/imprint' | '/privacy' | '/timeline'
+  to:
+    '/' | '/imprint' | '/privacy' | '/timeline' | '/data/resume' | '/data/work'
+  id:
+    | '__root__'
+    | '/'
+    | '/imprint'
+    | '/privacy'
+    | '/timeline'
+    | '/data/resume'
+    | '/data/work'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +94,8 @@ export interface RootRouteChildren {
   ImprintRoute: typeof ImprintRoute
   PrivacyRoute: typeof PrivacyRoute
   TimelineRoute: typeof TimelineRoute
+  DataResumeRoute: typeof DataResumeRoute
+  DataWorkRoute: typeof DataWorkRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +128,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimelineRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/data/resume': {
+      id: '/data/resume'
+      path: '/data/resume'
+      fullPath: '/data/resume'
+      preLoaderRoute: typeof DataResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data/work': {
+      id: '/data/work'
+      path: '/data/work'
+      fullPath: '/data/work'
+      preLoaderRoute: typeof DataWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +150,8 @@ const rootRouteChildren: RootRouteChildren = {
   ImprintRoute: ImprintRoute,
   PrivacyRoute: PrivacyRoute,
   TimelineRoute: TimelineRoute,
+  DataResumeRoute: DataResumeRoute,
+  DataWorkRoute: DataWorkRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -14,6 +14,7 @@ export interface ResumeEntry {
     details: string;
     technology?: TechnologyEntry;
     link?: ResumeLink;
+    links?: ResumeLink[];
     pinned?: boolean;
 }
 
@@ -57,11 +58,11 @@ export const resume: ResumeEntry[] = [
         role: "Software Engineer",
         institution: "a.s.t.i. GmbH",
         details: dedent`
-            Developed full-stack web and mobile apps, internal tools and dashboards for wide range of clients. 
+            Developed full-stack web and mobile apps, internal tools and dashboards for a wide range of clients.
         `,
         technology: {
-            langages: ["JavaScript", "C++"],
-            libraries: ["Sails.js", "Angular", "Cordoba", "Qt5"],
+            languages: ["JavaScript", "C++"],
+            libraries: ["Sails.js", "Angular", "Cordova", "Qt5"],
         },
     },
     {
@@ -85,13 +86,15 @@ export const resume: ResumeEntry[] = [
         institution: "objekt klein a UG",
         details: dedent`
             Developed a brand identity and designed online and print media for
-            objekt klein a, a collectively run nightclub and cultural space. Many of
+            *objekt klein a*, a collectively run nightclub and cultural space. Many of
             the works are generative.
         `,
-        link: {
-            url: "https://objektkleina.com",
-            text: "objektkleina.com",
-        },
+        links: [
+            {
+                url: "https://objektkleina.com",
+                text: "objektkleina.com",
+            },
+        ],
         technology: {
             languages: ["Python", "Processing", "Kotlin", "Rust"],
             software: ["Adobe Illustrator", "Blender"],
@@ -104,11 +107,11 @@ export const resume: ResumeEntry[] = [
         role: "Co-Founder, Lead Developer",
         institution: "Wave Casual UG",
         details: dedent`
-            Lead the development of multiple projects:
-            - Designed, developed and shipped the Nylon synthesizer-plugin
-            - Planned, built and deployed cloud services to support Nylons payment system and social features
-            - Built a prototype for an AI-based audio-plugin for a client from the film industry
-            - Designed and developed the UI for a smart loudness meter
+            Led development across the company's projects:
+
+            - Designed, developed and shipped Nylon, a synthesizer plugin built around a novel geometric oscillator, covered by MusicRadar, Gearnews and Synth Anatomy
+            - Planned, built and deployed cloud services to support Nylon's payment system and social features
+            - Built a prototype for an AI-based audio plugin for a client from the film industry
         `,
         technology: {
             languages: ["C++", "FAUST", "TypeScript"],
@@ -116,6 +119,12 @@ export const resume: ResumeEntry[] = [
             software: ["Figma", "PostgreSQL"],
             services: ["AWS", "DigitalOcean"],
         },
+        links: [
+            {
+                url: "https://github.com/eulervoid/nylon",
+                text: "github.com/eulervoid/nylon",
+            },
+        ],
         pinned: true,
     },
     {
@@ -125,34 +134,37 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Software Engineer",
         institution: "Concordium AG",
         details: dedent`
-            Designed and built various dashboards and interactive visualizations of 
-            blockchain infrastructure, using Elm and SVG.
+            Built dashboards and interactive visualizations of blockchain infrastructure in Elm and SVG.
         `,
-        link: {
-            url: "https://concordium.com",
-            text: "concordium.com",
-        },
+        links: [
+            {
+                url: "https://concordium.com",
+                text: "concordium.com",
+            },
+        ],
         technology: {
             languages: ["Elm", "TypeScript"],
             software: ["Figma"],
         },
-        pinned: true,
     },
     {
         begin: "2021-02-01",
         end: "2021-10-01",
         type: "Freelance",
         role: "Freelance Software Engineer",
-        institution: "Center for Tactile Internet, TU Dresden",
+        institution: "Centre for Tactile Internet, TU Dresden",
         details: dedent`
-            Helped create promotional tech-demos with Unity:
-            - An animated avatar mirroring the live performance of a piano player wearing a mocap suit
+            Built promotional tech demos with Unity:
+
+            - An animated 3D avatar mirroring the live performance of a piano player wearing a motion-capture suit
             - A surfing mini-game using a real surfboard as a controller
         `,
-        link: {
-            url: "https://ceti.one/",
-            text: "ceti.one",
-        },
+        links: [
+            {
+                url: "https://ceti.one/",
+                text: "ceti.one",
+            },
+        ],
         technology: {
             languages: ["C#"],
             software: ["TouchDesigner", "Unity", "Blender"],
@@ -166,15 +178,21 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Software Engineer",
         institution: "objekt klein a e.V.",
         details: dedent`
-            Designed and developed a multiplayer 3D web experience, for hosting virtual events.
-            At one of the 12 events throughout the year, guests could see DJs play and meet each
-            other in a virtual replica of *objekt klein a*, a cultural space in Dresden, Germany.
+            Designed and developed the *Virtual Club*, a digital recreation of *objekt klein a*,
+            where users would fly around as smiley avatars, listen to DJ sets, talk to each other
+            and look at digital exhibitions. During the COVID-19 lockdowns the Virtual Club hosted
+            14 events with up to 500 concurrent users and a diverse mix of DJs and artists,
+            and received the *Applaus Award for Innovation* in 2022.
 	`,
         technology: {
-            langages: ["TypeScript", "Rust"],
+            languages: ["TypeScript", "Rust"],
             libraries: ["SolidJS", "BabylonJS", "WebRTC", "Axum"],
             software: ["Figma", "Blender", "Meshroom"],
         },
+        links: [
+            { url: "https://objektkleina.com", text: "objektkleina.com" },
+            { url: "https://www.youtube.com/watch?v=oKXnjmGDuNo", text: "Applaus Award Video" },
+        ],
         pinned: true,
     },
     {
@@ -184,50 +202,64 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Software Engineer",
         institution: "HolyPoly GmbH",
         details: dedent`
-            Designed and built interactive prototypes and websites for clients \
-            in the plastics industry – from landing pages to minigames. \
+            Built interactive prototypes and websites supporting recycling campaigns for clients
+            in the plastics industry, from landing pages to minigames.
         `,
         technology: {
             languages: ["TypeScript"],
-            libraries: ["React", "Astro", "SolidJS", "BabylonJS"],
+            libraries: ["React", "Astro", "BabylonJS"],
             software: ["Figma"],
         },
+        links: [{ url: "https://www.holypoly.com", text: "holypoly.com" }],
         pinned: true,
     },
     {
         begin: "2023-08-01",
         end: "2025-01-01",
         type: "Freelance",
-        role: "Freelance Designer",
+        role: "Freelance Creative Technologist",
         institution: "Chaos Computer Club",
         details: dedent`
-            Designed the style guide, merch and title animations for Chaos Communication Congress \
-            in 2023 and 2024 (37C3 and 38C3), in collaboration with RoboKid.
+            Designed the Styleguide, merch and generative title animations for *Chaos Communication Congress*
+            *37C3* and *38C3*, each with ~15,000 attendees, in collaboration with RoboKid.
         `,
         technology: {
             languages: ["Rust", "Python"],
             libraries: ["bpy", "ffmpeg"],
             software: ["Blender", "Figma", "Affinity"],
         },
+        links: [
+            {
+                text: "37C3 Styleguide",
+                url: "https://events.ccc.de/congress/2023/infos/styleguide/styleguide.pdf",
+            },
+            {
+                text: "38C3 Styleguide",
+                url: "https://events.ccc.de/congress/2024/infos/styleguide/38c3-styleguide-v2.pdf",
+            },
+        ],
         pinned: true,
     },
     {
         begin: "2024-01-01",
         end: "2025-03-30",
         type: "Freelance",
-        role: "Freelance Software Engineer",
+        role: "Freelance Lead Engineer, acting CTO",
         institution: "Enerithm Technology GmbH",
         details: dedent`
-            Led the early stage development team building *Energuide* an AI based energy efficiency platform. 
-            - UI/UX design
-            - System architecture
-            - AI development, evaluation and testing
-            - Continuous Deployment
+            Technical lead for *Energuide*, an AI-based energy-efficiency platform at a seed-stage startup,
+            leading a team of four engineers:
+
+            - Took the product from concept to a live MVP with its first customers, among them large real-estate agencies
+            - Owned system architecture, the chatbot, data pipeline, evaluation and testing, and continuous deployment
+            - Designed the UI/UX and hired engineers to grow the team to meet demand
         `,
-        link: {
-            url: "https://enerithm.com",
-            text: "enerithm.com",
-        },
+        links: [
+            {
+                url: "https://enerithm.com",
+                text: "enerithm.com",
+            },
+        ],
         technology: {
             languages: ["Python", "TypeScript"],
             libraries: ["FastAPI", "Pydantic", "React"],
@@ -243,15 +275,19 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Software Engineer",
         institution: "Myceli.AI",
         details: dedent`
-            Built payment infrastructure for pollinations.ai, a community focused AI platform:
-            - A new authentication system based on Cloudflare Workers, using Hono and BetterAuth, acting as an authenticating proxy
-            - Precise usage based spend tracking for text and image generation
-            - Credit and billing system integrating Polar.sh
+            Led an effort to modernize the stack and build new payment infrastructure for *pollinations.ai*,
+            an open generative media API with 17k+ Discord members and 500+ apps built on it:
+
+            - Port existing generation services to TypeScript
+            - Add an auth proxy on Cloudflare Workers in front of the generation APIs, with auto-generated OpenAPI docs
+            - Usage metering for text and image APIs with traces from request through billing
+            - Batching cache to keep billing writes under the provider's 100 req/s limit, processing millions of events per day
+            - Credits and invoicing via Polar.sh
         `,
-        link: {
-            url: "https://pollinations.ai",
-            text: "pollinations.ai",
-        },
+        links: [
+            { url: "https://pollinations.ai", text: "pollinations.ai" },
+            { url: "https://myceli.ai", text: "myceli.ai" },
+        ],
         technology: {
             languages: ["TypeScript"],
             libraries: ["Hono", "React", "TanStack"],
