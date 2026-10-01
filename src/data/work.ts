@@ -93,6 +93,10 @@ const entries: WorkEntry[] = [
                 label: "Nylon Introduction Video",
                 href: "https://www.youtube.com/watch?v=zHkuSWSdI94",
             },
+            {
+                label: "github.com/eulervoid/nylon",
+                href: "https://github.com/eulervoid/nylon",
+            },
         ],
     },
     {
@@ -102,8 +106,9 @@ const entries: WorkEntry[] = [
             users would fly around as smiley avatars, listen to DJ sets, talk to
             each other and look at digital exhibitions.
 
-            During the Covid19 lockdowns, we hosted 14 virtual events with a diverse
-            mix of DJs and Artists and got awarded the *Applaus Award for Innovation* in 2022.
+            During the Covid19 lockdowns, we hosted **14 virtual events** with up to **500 concurrent 
+            visitors** and a diverse mix of international DJs and Artists. The project got awarded 
+            the *Applaus Award for Innovation* in 2022.
         `,
         client: "objekt klein a e.V.",
         begin: "2020-12-01",

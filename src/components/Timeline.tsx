@@ -1,8 +1,9 @@
 import { resume } from "@src/data/resume";
 import { dedent, formatDateRange } from "@src/util";
-import ReactMarkdown from "react-markdown";
 import { SectionHeader } from "./SectionHeader";
 import { Taglist } from "./Taglist";
+import { snippets } from "@src/data/shared";
+import { Markdown } from "./Markdown";
 
 type Props = {
     title?: string;
@@ -17,10 +18,7 @@ export function Timeline(props: Props) {
     const description =
         props.description ||
         dedent`
-            Since finishing my degree in Media Computer Science in 2015,
-            I worked with starups and big cooperations alike, combining
-            design thinking and creative problem solving with broad
-            technical expertise.
+            I have ${snippets.experience}
 	`;
     const entries = props.showAll ? resume : resume.filter((entry) => entry.pinned === true);
     if (props.chonological) {
@@ -58,7 +56,7 @@ export function Timeline(props: Props) {
                         </div>
                     </div>
                     <div className="col-span-2 space-y-2 ml-8 sm:ml-11.5 md:ml-0">
-                        <ReactMarkdown>{entry.details}</ReactMarkdown>
+                        <Markdown>{entry.details}</Markdown>
                         {props.showTechnology && (
                             <div className="grid grid-cols-4 gap-6 mt-7">
                                 {Object.entries(entry.technology || {}).map(

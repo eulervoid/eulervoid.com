@@ -1,7 +1,7 @@
 import { WorkEntry } from "@src/data/work";
 import { Taglist } from "./Taglist";
-import ReactMarkdown from "react-markdown";
 import { formatDateRange } from "@src/util";
+import { Markdown } from "./Markdown";
 
 type WorkDetailsProps = {
     entry: WorkEntry;
@@ -17,10 +17,10 @@ export function WorkDetails({ entry }: WorkDetailsProps) {
                     <br />
                     {formatDateRange(entry.begin, entry.end)}
                 </div>
-                <ReactMarkdown>{entry.description}</ReactMarkdown>
+                <Markdown>{entry.description}</Markdown>
             </div>
             <div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
-                <Taglist title="links" tags={entry.links} className="col-span-3 md:col-span-2" />
+                <Taglist title="links" tags={entry.links} className="col-span-3 lg:col-span-2" />
                 {Object.entries(entry.technology).map(([groupName, groupTags]) => (
                     <Taglist key={groupName} title={groupName} tags={groupTags} />
                 ))}

@@ -181,8 +181,8 @@ export const resume: ResumeEntry[] = [
             Designed and developed the *Virtual Club*, a digital recreation of *objekt klein a*,
             where users would fly around as smiley avatars, listen to DJ sets, talk to each other
             and look at digital exhibitions. During the COVID-19 lockdowns the Virtual Club hosted
-            14 events with up to 500 concurrent users and a diverse mix of DJs and artists,
-            and received the *Applaus Award for Innovation* in 2022.
+            **14 events** with up to **500 concurrent users** and a diverse mix of international DJs 
+            and artists. The project received the *Applaus Award for Innovation* in 2022.
 	`,
         technology: {
             languages: ["TypeScript", "Rust"],
@@ -262,7 +262,7 @@ export const resume: ResumeEntry[] = [
         ],
         technology: {
             languages: ["Python", "TypeScript"],
-            libraries: ["FastAPI", "Pydantic", "React"],
+            libraries: ["FastAPI", "PydanticAI", "React"],
             software: ["PostgreSQL", "Nomad", "Figma"],
             services: ["Hetzner Cloud"],
         },
@@ -291,7 +291,7 @@ export const resume: ResumeEntry[] = [
         technology: {
             languages: ["TypeScript"],
             libraries: ["Hono", "React", "TanStack"],
-            services: ["Polar.sh", "Cloudflare"],
+            services: ["Polar.sh", "Cloudflare", "Clickhouse"],
         },
         pinned: true,
     },
