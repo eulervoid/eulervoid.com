@@ -33,16 +33,14 @@ export const resume: ResumeEntry[] = [
         role: "Diploma in Media Computer Science",
         institution: "Technical University of Dresden",
         details: dedent`
-            Specialization:
+            Specializations:
             - Media Technology and Design
             - Development Methods and Tools
             - System Architecture
             - Art and Design (Minor)
-            - TU Certificate in Portuguese
-
 
             Thesis: *Zykloid: A Visual Approach to Drum Synthesis*  
-            (grade 1.0)  
+            (grade: 1.0)
 
             Degree: **Diplom-Medieninformatiker**  
             (overall grade: 1.3)
@@ -58,7 +56,7 @@ export const resume: ResumeEntry[] = [
         role: "Software Engineer",
         institution: "a.s.t.i. GmbH",
         details: dedent`
-            Developed full-stack web and mobile apps, internal tools and dashboards for a wide range of clients.
+            Developed full-stack web and mobile apps, internal tools, and dashboards for a wide range of clients.
         `,
         technology: {
             languages: ["JavaScript", "C++"],
@@ -71,7 +69,7 @@ export const resume: ResumeEntry[] = [
         role: "Student Assistant",
         institution: "Chair of Media Design, TU Dresden",
         details: dedent`
-            Developed interactive presentation software and tech demos for trade fair appearances.
+            Developed interactive presentation software and technology demos for trade fairs.
         `,
         technology: {
             languages: ["C++"],
@@ -85,9 +83,9 @@ export const resume: ResumeEntry[] = [
         role: "Co-Founder, Art Director",
         institution: "objekt klein a UG",
         details: dedent`
-            Developed a brand identity and designed online and print media for
-            *objekt klein a*, a collectively run nightclub and cultural space. Many of
-            the works are generative.
+            Developed the brand identity and designed digital and print materials for
+            *objekt klein a*, a collectively run nightclub and cultural space, often using
+            generative techniques.
         `,
         links: [
             {
@@ -109,9 +107,9 @@ export const resume: ResumeEntry[] = [
         details: dedent`
             Led development across the company's projects:
 
-            - Designed, developed and shipped Nylon, a synthesizer plugin built around a novel geometric oscillator, covered by MusicRadar, Gearnews and Synth Anatomy
-            - Planned, built and deployed cloud services to support Nylon's payment system and social features
-            - Built a prototype for an AI-based audio plugin for a client from the film industry
+            - Designed, developed, and shipped Nylon, a synthesizer plugin built around a novel geometric oscillator; received coverage in MusicRadar, Gearnews, and Synth Anatomy
+            - Planned, built, and deployed cloud services supporting Nylon's payment system and social features
+            - Prototyped an AI-based audio plugin for a client in the film industry
         `,
         technology: {
             languages: ["C++", "FAUST", "TypeScript"],
@@ -154,10 +152,10 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Software Engineer",
         institution: "Centre for Tactile Internet, TU Dresden",
         details: dedent`
-            Built promotional tech demos with Unity:
+            Built promotional technology demos in Unity:
 
-            - An animated 3D avatar mirroring the live performance of a piano player wearing a motion-capture suit
-            - A surfing mini-game using a real surfboard as a controller
+            - An animated 3D avatar that mirrored a live performance by a pianist wearing a motion-capture suit
+            - A surfing minigame controlled with a real surfboard
         `,
         links: [
             {
@@ -166,7 +164,7 @@ export const resume: ResumeEntry[] = [
             },
         ],
         technology: {
-            languages: ["C#"],
+            languages: ["C#", "Python"],
             software: ["TouchDesigner", "Unity", "Blender"],
         },
         pinned: true,
@@ -179,14 +177,14 @@ export const resume: ResumeEntry[] = [
         institution: "objekt klein a e.V.",
         details: dedent`
             Designed and developed the *Virtual Club*, a digital recreation of *objekt klein a*,
-            where users would fly around as smiley avatars, listen to DJ sets, talk to each other
-            and look at digital exhibitions. During the COVID-19 lockdowns the Virtual Club hosted
-            **14 events** with up to **500 concurrent users** and a diverse mix of international DJs 
-            and artists. The project received the *Applaus Award for Innovation* in 2022.
+            where users could fly around as smiley avatars, listen to DJ sets, chat, and explore
+            digital exhibitions. During the COVID-19 lockdowns, the Virtual Club hosted *14 events*
+            featuring international DJs and artists, with up to *500 concurrent users*.
+            The project received the *Applaus Award for Innovation* in 2022.
 	`,
         technology: {
             languages: ["TypeScript", "Rust"],
-            libraries: ["SolidJS", "BabylonJS", "WebRTC", "Axum"],
+            libraries: ["SolidJS", "BabylonJS", "Tokio", "Axum"],
             software: ["Figma", "Blender", "Meshroom"],
         },
         links: [
@@ -220,8 +218,9 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Creative Technologist",
         institution: "Chaos Computer Club",
         details: dedent`
-            Designed the Styleguide, merch and generative title animations for *Chaos Communication Congress*
-            *37C3* and *38C3*, each with ~15,000 attendees, in collaboration with RoboKid.
+            Collaborated with RoboKid to design style guides, merchandise, and generative title animations
+            for *37C3* and *38C3*, editions of the *Chaos Communication Congress* that each attracted
+            approximately 15,000 attendees.
         `,
         technology: {
             languages: ["Rust", "Python"],
@@ -244,15 +243,15 @@ export const resume: ResumeEntry[] = [
         begin: "2024-01-01",
         end: "2025-03-30",
         type: "Freelance",
-        role: "Freelance Lead Engineer, acting CTO",
+        role: "Freelance Lead Engineer, Acting CTO",
         institution: "Enerithm Technology GmbH",
         details: dedent`
-            Technical lead for *Energuide*, an AI-based energy-efficiency platform at a seed-stage startup,
-            leading a team of four engineers:
+            Led technical development of *Energuide*, an AI-based energy-efficiency platform at a seed-stage
+            startup, managing a team of four engineers:
 
-            - Took the product from concept to a live MVP with its first customers, among them large real-estate agencies
-            - Owned system architecture, the chatbot, data pipeline, evaluation and testing, and continuous deployment
-            - Designed the UI/UX and hired engineers to grow the team to meet demand
+            - Took the product from concept to a live MVP with its first customers, including large real estate agencies
+            - Owned system architecture, chatbot development, data pipelines, evaluation, testing, and continuous deployment
+            - Designed the UI/UX and hired engineers to expand the team as demand grew
         `,
         links: [
             {
@@ -275,14 +274,14 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Software Engineer",
         institution: "Myceli.AI",
         details: dedent`
-            Led an effort to modernize the stack and build new payment infrastructure for *pollinations.ai*,
-            an open generative media API with 17k+ Discord members and 500+ apps built on it:
+            Led stack modernization and development of new payment infrastructure for *pollinations.ai*,
+            an open generative media API with more than 17,000 Discord members and over 500 apps built on it:
 
-            - Port existing generation services to TypeScript
-            - Add an auth proxy on Cloudflare Workers in front of the generation APIs, with auto-generated OpenAPI docs
-            - Usage metering for text and image APIs with traces from request through billing
-            - Batching cache to keep billing writes under the provider's 100 req/s limit, processing millions of events per day
-            - Credits and invoicing via Polar.sh
+            - Ported existing generation services to TypeScript
+            - Added a Cloudflare Workers authentication proxy in front of the generation APIs, with automatically generated OpenAPI documentation
+            - Implemented usage metering for text and image APIs, with end-to-end tracing from request to billing
+            - Built a batching cache that processed millions of events per day while keeping billing writes below the provider's limit of 100 requests per second
+            - Implemented credits and invoicing through Polar.sh
         `,
         links: [
             { url: "https://pollinations.ai", text: "pollinations.ai" },
