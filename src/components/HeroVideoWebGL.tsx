@@ -231,6 +231,8 @@ export default function HeroVideoWebGL({
         const init = async () => {
             try {
                 const noiseImg = await loadImage(noiseUrl);
+                if (!isActive) return;
+
                 noiseSize = {
                     width: noiseImg.width,
                     height: noiseImg.height,
@@ -264,7 +266,6 @@ export default function HeroVideoWebGL({
                     if (Hls.isSupported()) {
                         const hlsInstance = new Hls({
                             enableWorker: true,
-                            lowLatencyMode: true,
                         });
                         hlsRef.current = hlsInstance;
                         hlsInstance.loadSource(videoUrl);
