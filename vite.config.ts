@@ -45,6 +45,7 @@ export default defineConfig({
     resolve: {
         tsconfigPaths: true,
     },
+    envPrefix: ["PROFILE_"],
     plugins: [
         // Make sure paid fonts are present
         requireFiles([

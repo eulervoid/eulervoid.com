@@ -1,4 +1,4 @@
-import { resume } from "@src/data/resume";
+import { timeline } from "@src/data/timeline";
 import { dedent, formatDateRange } from "@src/util";
 import { SectionHeader } from "./SectionHeader";
 import { Taglist } from "./Taglist";
@@ -20,7 +20,7 @@ export function Timeline(props: Props) {
         dedent`
             I have ${snippets.experience}
 	`;
-    const entries = props.showAll ? resume : resume.filter((entry) => entry.pinned === true);
+    const entries = props.showAll ? timeline : timeline.filter((entry) => entry.pinned === true);
     if (props.chonological) {
         entries.sort((a, b) => a.begin.localeCompare(b.begin));
     }

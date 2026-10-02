@@ -1,12 +1,13 @@
 import { dedent } from "@src/util";
 
-export const address = {
-    name: "",
-    street: "",
-    postalCode: "",
-    city: "",
-    vatId: "",
-    email: "",
+export const profile = {
+    name: import.meta.env.PROFILE_NAME,
+    street: import.meta.env.PROFILE_STREET_ADDRESS,
+    postalCode: import.meta.env.PROFILE_POSTAL_CODE,
+    city: import.meta.env.PROFILE_CITY,
+    country: import.meta.env.PROFILE_COUNTRY,
+    vatId: import.meta.env.PROFILE_VAT_ID,
+    email: import.meta.env.PROFILE_EMAIL,
 } as const;
 
 export const snippets = {

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { address } from "@src/data/shared";
+import { profile } from "@src/data/shared";
 
 export const Route = createFileRoute("/privacy")({
     component: Privacy,
@@ -51,12 +51,12 @@ function PrivacyGerman() {
                 Verantwortlicher Anbieter dieses Internetauftritts im datenschutzrechtlichen Sinne
                 ist:
             </p>
-            {address.name}
+            {profile.name}
             <br />
-            {address.street}
+            {profile.street}
             <br />
-            {`${address.postalCode} ${address.city}`}
-            <p>E-Mail: {address.email}</p>
+            {`${profile.postalCode} ${profile.city}`}
+            <p>E-Mail: {profile.email}</p>
             <h3 className={heading3}>II. Rechte der Nutzer und Betroffenen</h3>
             <p>
                 Mit Blick auf die nachfolgend noch näher beschriebene Datenverarbeitung haben die
@@ -182,12 +182,12 @@ function PrivacyEnglish() {
                 The party responsible for this website (the „controller“) for purposes of data
                 protection law is:
             </p>
-            {address.name}
+            {profile.name}
             <br />
-            {address.street}
+            {profile.street}
             <br />
-            {`${address.postalCode} ${address.city}`}
-            <p>E-Mail: {address.email}</p>
+            {`${profile.postalCode} ${profile.city}`}
+            <p>E-Mail: {profile.email}</p>
             <h3 className={heading3}>II. The rights of users and data subjects</h3>
             <p>
                 With regard to the data processing to be described in more detail below, users and

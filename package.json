@@ -12,7 +12,8 @@
         "lint": "oxlint",
         "typecheck": "tsc --noEmit",
         "check": "npm run typecheck && npm run fmt:check && npm run lint",
-        "deploy": "npm run check && npm run build && tsx src/scripts/deploy.ts"
+        "deploy": "npm run check && npm run build && tsx src/scripts/deploy.ts",
+        "typst:build": "typst compile --input \"data=$(xh get localhost:3000/data)\" src/typst/cv.typ dist/client/assets/cv.pdf"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.3.3",

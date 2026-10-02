@@ -5,7 +5,7 @@ export interface ResumeLink {
     text: string;
 }
 
-export interface ResumeEntry {
+export interface TimelineEntry {
     begin: string;
     end: string | null;
     type?: string;
@@ -25,7 +25,7 @@ export type TechnologyEntry = {
     services?: string[];
 };
 
-export const resume: ResumeEntry[] = [
+export const timeline: TimelineEntry[] = [
     {
         begin: "2007-10-01",
         end: "2015-07-01",
@@ -77,8 +77,8 @@ export const resume: ResumeEntry[] = [
         },
     },
     {
-        begin: "2014",
-        end: null,
+        begin: "2015",
+        end: "2024",
         type: "Startup",
         role: "Co-Founder, Art Director",
         institution: "objekt klein a UG",
@@ -94,7 +94,8 @@ export const resume: ResumeEntry[] = [
             },
         ],
         technology: {
-            languages: ["Python", "Processing", "Kotlin", "Rust"],
+            languages: ["Python", "Java", "Kotlin", "Rust"],
+            libraries: ["Processing", "OpenRNDR", "nannou"],
             software: ["Adobe Illustrator", "Blender"],
         },
     },
@@ -106,13 +107,12 @@ export const resume: ResumeEntry[] = [
         institution: "Wave Casual UG",
         details: dedent`
             Led development across the company's projects:
-
-            - Designed, developed, and shipped Nylon, a synthesizer plugin built around a novel geometric oscillator; received coverage in MusicRadar, Gearnews, and Synth Anatomy
+            - Designed, developed, and **shipped** *Nylon*, a synthesizer plugin built around a novel geometric oscillator; received coverage in MusicRadar, Gearnews, and Synth Anatomy
             - Planned, built, and deployed cloud services supporting Nylon's payment system and social features
             - Prototyped an AI-based audio plugin for a client in the film industry
         `,
         technology: {
-            languages: ["C++", "FAUST", "TypeScript"],
+            languages: ["C++", "FAUST", "Elm", "TypeScript"],
             libraries: ["JUCE", "Koa.js"],
             software: ["Figma", "PostgreSQL"],
             services: ["AWS", "DigitalOcean"],
@@ -150,11 +150,10 @@ export const resume: ResumeEntry[] = [
         end: "2021-10-01",
         type: "Freelance",
         role: "Freelance Software Engineer",
-        institution: "Centre for Tactile Internet, TU Dresden",
+        institution: "Centre for Tactile Internet\nTU Dresden",
         details: dedent`
-            Built promotional technology demos in Unity:
-
-            - An animated 3D avatar that mirrored a live performance by a pianist wearing a motion-capture suit
+            Built interactive demos using Unity and TouchDesigner:
+            - A 3D avatar that mirrored a pianist’s live performance using motion capture, along with an audio-reactive visualization
             - A surfing minigame controlled with a real surfboard
         `,
         links: [
@@ -176,12 +175,11 @@ export const resume: ResumeEntry[] = [
         role: "Freelance Software Engineer",
         institution: "objekt klein a e.V.",
         details: dedent`
-            Designed and developed the *Virtual Club*, a digital recreation of *objekt klein a*,
-            where users could fly around as smiley avatars, listen to DJ sets, chat, and explore
-            digital exhibitions. During the COVID-19 lockdowns, the Virtual Club hosted *14 events*
-            featuring international DJs and artists, with up to *500 concurrent users*.
-            The project received the *Applaus Award for Innovation* in 2022.
-	`,
+            Designed and developed the **Virtual Club**, an interactive digital recreation of *objekt klein a*, where users could explore as smiley avatars, listen to DJ sets, and visit digital exhibitions.
+            - Built a **real-time Rust backend** using Tokio, Axum and Tungstenite to synchronize avatar movement over WebSockets and provide **WebRTC signaling for voice chat** between users.
+            - Scanned the physical venue and reconstructed it via MeshRoom and Blender to create the club’s interactive 3D environment.
+            - Supported **14 events with up to 500 concurrent users**, featuring international DJs and artists during the COVID-19 lockdowns. The project received the **Applaus Award for Innovation in 2022**.
+        `,
         technology: {
             languages: ["TypeScript", "Rust"],
             libraries: ["SolidJS", "BabylonJS", "Tokio", "Axum"],
@@ -220,7 +218,7 @@ export const resume: ResumeEntry[] = [
         details: dedent`
             Collaborated with RoboKid to design style guides, merchandise, and generative title animations
             for *37C3* and *38C3*, editions of the *Chaos Communication Congress* that each attracted
-            approximately 15,000 attendees.
+            approximately **15,000 attendees**.
         `,
         technology: {
             languages: ["Rust", "Python"],
@@ -243,13 +241,13 @@ export const resume: ResumeEntry[] = [
         begin: "2024-01-01",
         end: "2025-03-30",
         type: "Freelance",
-        role: "Freelance Lead Engineer, Acting CTO",
+        role: "Freelance Lead Engineer,\nActing CTO",
         institution: "Enerithm Technology GmbH",
         details: dedent`
             Led technical development of *Energuide*, an AI-based energy-efficiency platform at a seed-stage
-            startup, managing a team of four engineers:
+            startup, managing a **team of four engineers**:
 
-            - Took the product from concept to a live MVP with its first customers, including large real estate agencies
+            - Took the product **from concept to a live MVP in 6 months** with its first customers, including large real estate agencies
             - Owned system architecture, chatbot development, data pipelines, evaluation, testing, and continuous deployment
             - Designed the UI/UX and hired engineers to expand the team as demand grew
         `,
@@ -263,7 +261,7 @@ export const resume: ResumeEntry[] = [
             languages: ["Python", "TypeScript"],
             libraries: ["FastAPI", "PydanticAI", "React"],
             software: ["PostgreSQL", "Nomad", "Figma"],
-            services: ["Hetzner Cloud"],
+            services: ["Hetzner Cloud", "Neon"],
         },
         pinned: true,
     },
@@ -275,12 +273,12 @@ export const resume: ResumeEntry[] = [
         institution: "Myceli.AI",
         details: dedent`
             Led stack modernization and development of new payment infrastructure for *pollinations.ai*,
-            an open generative media API with more than 17,000 Discord members and over 500 apps built on it:
+            an open generative media API with over 500 apps built on it:
 
             - Ported existing generation services to TypeScript
             - Added a Cloudflare Workers authentication proxy in front of the generation APIs, with automatically generated OpenAPI documentation
             - Implemented usage metering for text and image APIs, with end-to-end tracing from request to billing
-            - Built a batching cache that processed millions of events per day while keeping billing writes below the provider's limit of 100 requests per second
+            - Built a batching cache that processed **millions of events per day** while keeping billing writes below the provider's limit of 100 requests per second
             - Implemented credits and invoicing through Polar.sh
         `,
         links: [
