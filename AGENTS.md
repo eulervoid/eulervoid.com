@@ -13,10 +13,10 @@ This repository contains the source code for the personal website of eulervoid, 
 ## 📁 Code Organization
 
 - `src/routes/`: TanStack Router file-based routes.
-  - `__root.tsx`: The root layout.
-  - `index.tsx`: The home page containing Hero, Work, and Timeline sections.
+    - `__root.tsx`: The root layout.
+    - `index.tsx`: The home page containing Hero, Work, and Timeline sections.
 - `src/components/`: React components.
-  - `SimulatedCursor/`: A complex cursor simulation system with its own provider, types, and hooks.
+    - `SimulatedCursor/`: A complex cursor simulation system with its own provider, types, and hooks.
 - `src/data/`: Static data for the site (resume, work entries).
 - `src/shaders/`: Custom GLSL shaders.
 - `src/styles/`: global CSS and Tailwind configurations.
@@ -27,12 +27,14 @@ This repository contains the source code for the personal website of eulervoid, 
 ## 🛠 Tech Stack & Patterns
 
 ### Frameworks
+
 - **TanStack Start**: Used for routing and SSR/Streaming.
 - **React 19**: Using the latest React features.
 - **React Three Fiber (@react-three/fiber)**: For 3D elements and canvas-based rendering.
 - **Tailwind CSS 4**: For styling using the `@tailwindcss/vite` plugin.
 
 ### Key Patterns
+
 - **File-based Routing**: Routes are defined in `src/routes`.
 - **Damping & Motion**: Uses `motion` (formerly framer-motion) for animations.
 - **Data-Driven**: Content for "Work" and "Timeline" is managed in `src/data/*.ts`.

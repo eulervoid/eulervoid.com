@@ -1,16 +1,16 @@
 {
-	"$schema": "https://charm.land/crush.json",
-	"lsp": {
-		"typescript": {
-			"command": "typescript-language-server",
-			"args": ["--stdio"]
-		}
-	},
-	"mcp": {
-		"playwright-mcp": {
-			"type": "stdio",
-			"command": "bunx",
-			"args": ["-y", "playwright-mcp@latest"]
-		}
-	}
+    "$schema": "https://charm.land/crush.json",
+    "lsp": {
+        "typescript": {
+            "command": "typescript-language-server",
+            "args": ["--stdio"]
+        }
+    },
+    "mcp": {
+        "playwright-mcp": {
+            "type": "stdio",
+            "command": "bunx",
+            "args": ["-y", "playwright-mcp@latest"]
+        }
+    }
 }

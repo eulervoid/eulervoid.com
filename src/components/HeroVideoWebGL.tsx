@@ -148,11 +148,7 @@ export default function HeroVideoWebGL({
         }
 
         const vertexShader = createShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
-        const fragmentShader = createShader(
-            gl,
-            gl.FRAGMENT_SHADER,
-            FRAGMENT_SHADER,
-        );
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
         if (!vertexShader || !fragmentShader) return;
 
         const program = createProgram(gl, vertexShader, fragmentShader);
@@ -160,26 +156,15 @@ export default function HeroVideoWebGL({
 
         // Look up uniform locations once
         const uTextureLoc = gl.getUniformLocation(program, "uTexture");
-        const uBlueNoiseTextureLoc = gl.getUniformLocation(
-            program,
-            "uBlueNoiseTexture",
-        );
+        const uBlueNoiseTextureLoc = gl.getUniformLocation(program, "uBlueNoiseTexture");
         const uResolutionLoc = gl.getUniformLocation(program, "uResolution");
-        const uTextureResolutionLoc = gl.getUniformLocation(
-            program,
-            "uTextureResolution",
-        );
-        const uNoiseResolutionLoc = gl.getUniformLocation(
-            program,
-            "uNoiseResolution",
-        );
+        const uTextureResolutionLoc = gl.getUniformLocation(program, "uTextureResolution");
+        const uNoiseResolutionLoc = gl.getUniformLocation(program, "uNoiseResolution");
         const uContrastLoc = gl.getUniformLocation(program, "uContrast");
         const uBrightnessLoc = gl.getUniformLocation(program, "uBrightness");
 
         // Set up geometry
-        const positions = new Float32Array([
-            -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
-        ]);
+        const positions = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);
         const uvs = new Float32Array([0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1]);
 
         const positionBuffer = gl.createBuffer();
@@ -224,14 +209,7 @@ export default function HeroVideoWebGL({
 
             if (video.readyState >= 2 && videoTexture) {
                 gl.bindTexture(gl.TEXTURE_2D, videoTexture);
-                gl.texImage2D(
-                    gl.TEXTURE_2D,
-                    0,
-                    gl.RGBA,
-                    gl.RGBA,
-                    gl.UNSIGNED_BYTE,
-                    video,
-                );
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
             }
 
             gl.useProgram(program);
@@ -248,11 +226,7 @@ export default function HeroVideoWebGL({
             const vidWidth = video.videoWidth || 1920;
             const vidHeight = video.videoHeight || 1080;
             gl.uniform2f(uTextureResolutionLoc, vidWidth, vidHeight);
-            gl.uniform2f(
-                uNoiseResolutionLoc,
-                noiseSize.width,
-                noiseSize.height,
-            );
+            gl.uniform2f(uNoiseResolutionLoc, noiseSize.width, noiseSize.height);
             gl.uniform1f(uContrastLoc, contrast);
             gl.uniform1f(uBrightnessLoc, brightness);
 
@@ -270,49 +244,18 @@ export default function HeroVideoWebGL({
 
                 noiseTexture = gl.createTexture();
                 gl.bindTexture(gl.TEXTURE_2D, noiseTexture);
-                gl.texImage2D(
-                    gl.TEXTURE_2D,
-                    0,
-                    gl.RGBA,
-                    gl.RGBA,
-                    gl.UNSIGNED_BYTE,
-                    noiseImg,
-                );
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, noiseImg);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-                gl.texParameteri(
-                    gl.TEXTURE_2D,
-                    gl.TEXTURE_MIN_FILTER,
-                    gl.NEAREST,
-                );
-                gl.texParameteri(
-                    gl.TEXTURE_2D,
-                    gl.TEXTURE_MAG_FILTER,
-                    gl.NEAREST,
-                );
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
                 videoTexture = gl.createTexture();
                 gl.bindTexture(gl.TEXTURE_2D, videoTexture);
-                gl.texParameteri(
-                    gl.TEXTURE_2D,
-                    gl.TEXTURE_WRAP_S,
-                    gl.CLAMP_TO_EDGE,
-                );
-                gl.texParameteri(
-                    gl.TEXTURE_2D,
-                    gl.TEXTURE_WRAP_T,
-                    gl.CLAMP_TO_EDGE,
-                );
-                gl.texParameteri(
-                    gl.TEXTURE_2D,
-                    gl.TEXTURE_MIN_FILTER,
-                    gl.LINEAR,
-                );
-                gl.texParameteri(
-                    gl.TEXTURE_2D,
-                    gl.TEXTURE_MAG_FILTER,
-                    gl.LINEAR,
-                );
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
                 // Initial resize using canvas bounding rect
                 const rect = canvas.getBoundingClientRect();
@@ -327,11 +270,7 @@ export default function HeroVideoWebGL({
                     const rect = canvas.getBoundingClientRect();
                     resize(rect.width, rect.height);
                     setIsReady(true);
-                    video
-                        .play()
-                        .catch((e) =>
-                            console.error("Failed to play video:", e),
-                        );
+                    video.play().catch((e) => console.error("Failed to play video:", e));
                     render();
                 };
 
