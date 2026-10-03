@@ -17,6 +17,10 @@ export const Route = createFileRoute("/")({
     component: Home,
     head: () => ({
         meta: [],
+        links: [
+            { rel: "canonical", href: "https://eulervoid.com/" },
+            { rel: "alternate", href: "/llms.txt", type: "text/plain" },
+        ],
     }),
     loader: async () => {
         if (import.meta.env.SSR) return;

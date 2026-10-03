@@ -15,11 +15,7 @@ type Props = {
 
 export function Timeline(props: Props) {
     const title = props.title || "Timeline";
-    const description =
-        props.description ||
-        dedent`
-            I have ${snippets.experience}
-	`;
+    const description = props.description || `I have ${snippets.experience}`;
     const entries = props.showAll ? timeline : timeline.filter((entry) => entry.pinned === true);
     if (props.chonological) {
         entries.sort((a, b) => a.begin.localeCompare(b.begin));

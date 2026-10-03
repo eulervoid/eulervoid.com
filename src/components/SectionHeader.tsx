@@ -14,9 +14,9 @@ export function SectionHeader({ title, description, className }: SectionHeaderPr
         >
             <h2 className="col-span-2">{title}</h2>
             {description && (
-                <p className="col-span-2 md:col-start-3">
+                <div className="col-span-2 md:col-start-3">
                     <Markdown>{description}</Markdown>
-                </p>
+                </div>
             )}
         </div>
     );

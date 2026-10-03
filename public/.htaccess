@@ -1,4 +1,9 @@
+<Files "llms.txt">
+    AddType text/plain .txt
+    AddCharset UTF-8 .txt
+</Files>
+
 RewriteEngine On
 RewriteCond %{HTTP_REFERER} !^https://eulervoid\.com [NC]
 RewriteCond %{HTTP_REFERER} !^https://www\.eulervoid\.com [NC]
-RewriteRule \.(woff|woff2)$ - [F]
+RewriteRule ^assets/.*\.(woff|woff2)$ - [F]

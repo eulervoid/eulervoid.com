@@ -3,8 +3,8 @@ import { defineConfig, Plugin } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
 import { imagetools } from "vite-imagetools";
-import { copyFileSync, existsSync } from "node:fs";
-import { resolve, join, basename } from "node:path";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { URLSearchParams } from "node:url";
 
 function requireFiles(files: string[]): Plugin {
@@ -15,23 +15,6 @@ function requireFiles(files: string[]): Plugin {
                 const fullPath = resolve(filePath);
                 if (!existsSync(fullPath)) {
                     throw new Error(`Missing required file: ${filePath}`);
-                }
-            }
-        },
-    };
-}
-
-function copyFiles(options: { files: string[] }): Plugin {
-    return {
-        name: "copy-files",
-        closeBundle() {
-            const targets = ["dist/client/assets"];
-            for (const fileSrc of options.files) {
-                const filename = basename(fileSrc);
-                for (const targetDir of targets) {
-                    const fileDest = join(targetDir, filename);
-                    copyFileSync(fileSrc, fileDest);
-                    console.log(`Copied ${fileSrc} to ${fileDest}`);
                 }
             }
         },
@@ -78,6 +61,7 @@ export default defineConfig({
             },
         }),
         tanstackStart({
+            pages: [{ path: "/llms.txt", prerender: { crawlLinks: false } }],
             prerender: {
                 enabled: true,
                 crawlLinks: true,
@@ -89,9 +73,5 @@ export default defineConfig({
         }),
         tailwindcss(),
         viteReact(),
-        // Copy .htaccess to assets for font protection
-        copyFiles({
-            files: ["assets/fonts/.htaccess"],
-        }),
     ],
 });
